@@ -11,30 +11,35 @@ return {
     local actions = require("telescope.actions")
 
     telescope.setup({
+      pickers = {
+        find_files = {
+          hidden = true,
+        },
+      },
       defaults = {
         path_display = { "truncate " },
         mappings = {
           i = {
             ["<C-k>"] = actions.move_selection_previous, -- move to prev result
             ["<C-j>"] = actions.move_selection_next, -- move to next result
-            ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+            ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
           },
         },
       },
     })
 
     telescope.load_extension("fzf")
-    telescope.load_extension("projects")
-    -- require("telescope").extensions.projects.projects({})
+    -- telescope.load_extension("projects")
 
     -- set keymaps
     local keymap = vim.keymap -- for conciseness
 
-    keymap.set("n", "<leader>pf", "<cmd>Telescope find_files<cr>")
-    keymap.set("n", "<leader>pg", "<cmd>Telescope git_files<cr>")
-    keymap.set("n", "<leader>ps", "<cmd>Telescope live_grep<cr>")
-    keymap.set("n", "<leader>pc", "<cmd>Telescope grep_string<cr>")
-    keymap.set("n", "<leader>pb", "<cmd>Telescope buffers<cr>")
-    keymap.set("n", "<leader>ph", "<cmd>Telescope help_tags<cr>")
+    keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>")
+    keymap.set("n", "<leader>fg", "<cmd>Telescope git_files<cr>")
+    keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>")
+
+    -- keymap.set("n", "<leader>pc", "<cmd>Telescope grep_string<cr>")
+    -- keymap.set("n", "<leader>pb", "<cmd>Telescope buffers<cr>")
+    keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>")
   end,
 }

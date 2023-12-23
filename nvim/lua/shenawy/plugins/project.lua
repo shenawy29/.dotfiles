@@ -1,8 +1,12 @@
-return {
-  "ahmedkhalf/project.nvim",
-  config = function()
-    require("project_nvim").setup({
-      vim.keymap.set("n", "<leader>pp", "<cmd>Telescope projects<CR>"),
-    })
-  end,
-}
+return {}
+-- return {
+--   "ahmedkhalf/project.nvim",
+--   config = function()
+--     require("project_nvim").setup({
+--       vim.keymap.set("n", "<leader>pp", "<cmd>Telescope projects<CR>"),
+--       manual_mode = true,
+--
+--       -- detection_methods = { "lsp", "pattern" },
+--     })
+--   end,
+-- }
