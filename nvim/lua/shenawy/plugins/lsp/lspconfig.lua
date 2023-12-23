@@ -1,3 +1,7 @@
+require("neodev").setup({
+  -- add any options here, or leave empty to use the default settings
+})
+
 return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
@@ -6,7 +10,6 @@ return {
     { "antosha417/nvim-lsp-file-operations", config = true },
   },
   config = function()
-    -- import lspconfig plugin
     local lspconfig = require("lspconfig")
 
     -- import cmp-nvim-lsp plugin
@@ -15,10 +18,10 @@ return {
     local keymap = vim.keymap -- for conciseness
 
     local opts = { noremap = true, silent = true }
+
     local on_attach = function(client, bufnr)
       opts.buffer = bufnr
 
-      -- set keybinds
       opts.desc = "Show LSP references"
       keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
 
@@ -27,9 +30,6 @@ return {
 
       opts.desc = "Show LSP definitions"
       keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
-
-      opts.desc = "Show LSP implementations"
-      keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
 
       opts.desc = "Show LSP type definitions"
       keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
@@ -41,10 +41,8 @@ return {
       keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
 
       opts.desc = "Show buffer diagnostics"
-      --
-      -- keymap.set("n", "<leader>vd", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
 
-      vim.keymap.set("n", "<leader>vd", function()
+      keymap.set("n", "<leader>vd", function()
         vim.diagnostic.open_float()
       end, opts)
 
@@ -61,11 +59,8 @@ return {
       keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
     end
 
-    -- used to enable autocompletion (assign to every lsp server config)
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
-    -- Change the Diagnostic symbols in the sign column (gutter)
-    -- (not in youtube nvim video)
     local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
 
     for type, icon in pairs(signs) do
@@ -73,8 +68,13 @@ return {
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
 
-    -- configure html server
     lspconfig["html"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
+    -- configure csharp server with plugin
+    lspconfig["csharp_ls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
@@ -97,46 +97,60 @@ return {
       on_attach = on_attach,
     })
 
-    -- configure clang server
-    lspconfig["clangd"].setup({
+    -- configure templ server
+    lspconfig["templ"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
 
-    -- configure rust server
     lspconfig["rust_analyzer"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
 
-    -- configure docker server
-    lspconfig["dockerls"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
-    -- configure go server
     lspconfig["gopls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
 
+    lspconfig["clangd"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      filetypes = { "c", "cc", "cpp" },
+      cmd = { "clangd" },
+    })
+
+    lspconfig["sqlls"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      root_dir = function(_)
+        return vim.loop.cwd()
+      end,
+    })
+
+    lspconfig["bufls"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      root_dir = function(_)
+        return vim.loop.cwd()
+      end,
+    })
+
     -- configure svelte server
     lspconfig["svelte"].setup({
       capabilities = capabilities,
-      on_attach = on_attach,
-      -- on_attach = function(client, bufnr)
-      --   on_attach(client, bufnr)
-      --
-      --   vim.api.nvim_create_autocmd("BufWritePost", {
-      --     pattern = { "*.js", "*.ts" },
-      --     callback = function(ctx)
-      --       if client.name == "svelte" then
-      --         client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
-      --       end
-      --     end,
-      --   })
-      -- end,
+      on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+
+        vim.api.nvim_create_autocmd("BufWritePost", {
+          pattern = { "*.js", "*.ts" },
+          callback = function(ctx)
+            if client.name == "svelte" then
+              client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
+            end
+          end,
+        })
+      end,
     })
 
     -- configure prisma orm server
@@ -163,6 +177,7 @@ return {
     lspconfig["pyright"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
+      filetypes = { "python" },
     })
 
     -- configure lua server (with special settings)

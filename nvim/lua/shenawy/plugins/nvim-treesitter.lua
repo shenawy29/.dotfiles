@@ -5,17 +5,25 @@ return {
     build = ":TSUpdate",
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
-      "windwp/nvim-ts-autotag",
+      -- "windwp/nvim-ts-autotag",
     },
     config = function()
       -- import nvim-treesitter plugin
       local treesitter = require("nvim-treesitter.configs")
+
+      require("nvim-treesitter.configs").setup({
+        autotag = {
+          enable = true,
+        },
+      })
 
       -- configure treesitter
       treesitter.setup({ -- enable syntax highlighting
         highlight = {
           enable = true,
         },
+
+        auto_install = true,
         -- enable indentation
         indent = { enable = true },
         -- enable autotagging (w/ nvim-ts-autotag plugin)
@@ -42,7 +50,8 @@ return {
           "dockerfile",
           "gitignore",
           "query",
-          "clangd",
+          "cpp",
+          "c",
         },
         incremental_selection = {
           enable = true,
@@ -54,10 +63,10 @@ return {
           },
         },
         -- enable nvim-ts-context-commentstring plugin for commenting tsx and jsx
-        context_commentstring = {
-          enable = true,
-          enable_autocmd = false,
-        },
+        -- context_commentstring = {
+        --   enable = true,
+        --   enable_autocmd = false,
+        -- },
       })
     end,
   },
