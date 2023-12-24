@@ -1,7 +1,4 @@
 #
-window:
-  opacity: 0.8
-
 key_bindings:
   - { key: F11, action: ToggleFullscreen }
 
@@ -21,24 +18,25 @@ env:
   TERM: xterm-256color
 
 window:
+  opacity: 1.0
   # Window dimensions in character columns and lines
   # (changes require restart)
   dimensions:
-    columns: 160
+    columns: 100
     lines: 80
 
   # Adds this many blank pixels of padding around the window
   # Units are physical pixels; this is not DPI aware.
   # (change requires restart)
   padding:
-    x: 4
-    y: 4
+    x: 0
+    y: 0
 
   # Window decorations
   # Setting this to false will result in window without borders and title bar.
-  decorations: full
+  decorations: None
 
-  startup_mode: Maximized
+  startup_mode: Windowed
 
   dynamic_title: true
 
@@ -68,7 +66,7 @@ font:
     # style: Regular
 
   # Point size of the font
-  size: 12
+  size: 11.9
 
   # Offset is the extra space around each character. offset.y can be thought of
   # as modifying the linespacing, and offset.x as modifying the letter spacing.
@@ -93,50 +91,38 @@ debug.render_timer: false
 colors:
   # Default colors
   primary:
-    background: "0x1f1f28"
-    foreground: "0xD9E0EE"
+    background: "#0E0E18"
+    foreground: "#e4d0a8"
 
-  cursor:
-    text: "0x1E1D2F"
-    cursor: "0xF5E0DC"
+  # cursor:
+  # text: "0x1E1D2F"
+  # cursor: "0xF5E0DC"
 
   # Normal colors
 
-  # normal:
-  #   black: "#6E6C7E"
-  #   red: "#F28FAD"
-  #   green: "#ABE9B3"
-  #   yellow: "#FAE3B0"
-  #   blue: "#96CDFB"
-  #   magenta: "#F5C2E7"
-  #   cyan: "#89DCEB"
-  #   white: "#D9E0EE"
-
   normal:
-    black: "0x2A2A37"
-    red: "0xFF5D62"
-    green: "0x98BB6C"
-    yellow: "0xE6C384"
-    blue: "0x7FB4CA"
-    magenta: "0xD27E99"
-    cyan: "0x7FB4CA"
-    white: "0xD9E0EE"
-
+    black: "#363646"
+    red: "#957fb8"
+    green: "#957fb8"
+    yellow: "#7e9cd8"
+    blue: "#e4d0a8"
+    magenta: "#D4A140"
+    cyan: "#F6C457"
+    white: "#efdaaf"
 
   bright:
-    black: "0x988BA2"
-    red: "0xF28FAD"
-    green: "0xABE9B3"
-    yellow: "0xFAE3B0"
-    blue: "0x96CDFB"
-    magenta: "0xF5C2E7"
-    cyan: "0x89DCEB"
-    white: "0xD9E0EE"
-
+    black: "#a7987a"
+    red: "#957fb8"
+    green: "#54546d"
+    yellow: "#4C3F47"
+    blue: "#90734E"
+    magenta: "#D4A140"
+    cyan: "#F6C457"
+    white: "#efdaaf"
 
   indexed_colors:
-    - { index: 16, color: "0xF8BD96" }
-    - { index: 17, color: "0xF5E0DC" }
+    - { index: 16, color: "#0E0E18" }
+    - { index: 17, color: "#e4d0a8" }
 # Visual Bell
 #
 # Any time the BEL code is received, Alacritty "rings" the visual bell. Once
@@ -164,7 +150,7 @@ bell:
   duration: 0
 
 # Background opacity
-window.opacity: 1.0
+window.opacity: 0.0
 
 # Mouse bindings
 #
@@ -216,7 +202,11 @@ selection:
 # - Block
 # - Underline
 # - Beam
-cursor.style: Block
+# cursor:
+#   style:
+#     shape: Block
+#   blinking: Always
+# blink_interval: 500
 
 # Live config reload (changes require restart)
 live_config_reload: true

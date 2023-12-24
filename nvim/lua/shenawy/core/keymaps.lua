@@ -39,7 +39,7 @@ keymap.set({ "n", "v" }, "<leader>y", [["+y]]) -- yank motion
 keymap.set({ "n", "v" }, "<leader>d", [["+d]]) -- delete motion
 
 -- Paste from system clipboard
-keymap.set("n", "<leader>p", [["+P]]) -- paste before cursor
+keymap.set({ "n", "v" }, "<leader>p", [["+P]]) -- paste before cursor
 
 keymap.set("c", "<C-u>", "<Home>")
 keymap.set("c", "<C-d>", "<End>")
@@ -64,7 +64,7 @@ keymap.set({ "n", "v", "o" }, "L", "$")
 
 keymap.set("n", "<leader>q", "<C-^>")
 
-keymap.set("n", "<leader>c", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left><C-f><Left>]])
+keymap.set("n", "<leader>c", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
