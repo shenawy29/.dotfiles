@@ -30,7 +30,7 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #1c1c2f
+background = #1c1c2f00
 foreground = #c8caf5
 alert = #e06e75
 volume_min=#a3be8c
@@ -56,8 +56,8 @@ secondary = #e60053
 width = 100%
 height = 22
 offset-x = 5%
-offset-y = 1%
-radius = 9.0
+offset-y = 0%
+radius = 0
 fixed-center = true
 bottom=true
 separator = |
@@ -68,7 +68,7 @@ foreground = ${colors.foreground}
 line-size = 3
 line-color = #f00
 
-; border-size = 1
+# border-size = 1
 border-color = #00000000
 
 padding-left = 0
@@ -84,7 +84,7 @@ font-3 = "Jetbrains Mono Nerd Font:size=10;2"
 
 modules-left = i3 xwindow
 ; modules-center = mpd
-modules-right = date mpd
+modules-right = date
 ; modules-right = date wlan battery pulseaudio
 
 tray-position = none

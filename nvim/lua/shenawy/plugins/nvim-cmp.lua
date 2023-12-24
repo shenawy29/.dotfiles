@@ -43,31 +43,32 @@ return {
         ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
         ["<C-e>"] = cmp.mapping.abort(), -- close completion window
         ["<CR>"] = cmp.mapping.confirm({ select = false }),
+
         ["<Tab>"] = cmp.mapping(function(fallback)
           -- if cmp.visible() then
-          -- cmp.select_next_item()
+          --   cmp.select_next_item()
           -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
           -- that way you will only jump inside the snippet region
-          if luasnip.expand_or_jumpable() then
+          if luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
-          -- elseif has_words_before() then
-          --   cmp.complete()
+          elseif has_words_before() then
+            cmp.complete()
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+          -- if cmp.visible() then
+          --   cmp.select_prev_item()
+          if luasnip.jumpable(-1) then
+            luasnip.jump(-1)
           else
             fallback()
           end
         end, { "i", "s" }),
       }),
 
-      ["<S-Tab>"] = cmp.mapping(function(fallback)
-        -- if cmp.visible() then
-        -- cmp.select_prev_item()
-        -- elseif luasnip.jumpable(-1) then
-        if luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
       -- sources for autocompletion
       sources = cmp.config.sources({
         { name = "nvim_lsp" },
