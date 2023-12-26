@@ -74,7 +74,7 @@ return {
     })
 
     -- configure csharp server with plugin
-    lspconfig["csharp_ls"].setup({
+    lspconfig["omnisharp"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
@@ -103,16 +103,19 @@ return {
       on_attach = on_attach,
     })
 
+    -- configure rust server
     lspconfig["rust_analyzer"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
 
+    -- configure go server
     lspconfig["gopls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
 
+    -- configure clang server
     lspconfig["clangd"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
@@ -120,6 +123,7 @@ return {
       cmd = { "clangd" },
     })
 
+    -- configure sql server
     lspconfig["sqlls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
@@ -128,6 +132,7 @@ return {
       end,
     })
 
+    -- configure proto buffer server
     lspconfig["bufls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
@@ -159,21 +164,21 @@ return {
       on_attach = on_attach,
     })
 
-    -- configure graphql language server
+    -- configure graphql  server
     lspconfig["graphql"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
       filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
     })
 
-    -- configure emmet language server
+    -- configure emmet  server
     lspconfig["emmet_ls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
       filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
     })
 
-    -- configure python server
+    -- configure python  server
     lspconfig["pyright"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
