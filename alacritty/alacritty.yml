@@ -1,6 +1,6 @@
 #
 key_bindings:
-  - { key: F11, action: ToggleFullscreen }
+    - { key: F11, action: ToggleFullscreen }
 
 # Configuration for Alacritty, the GPU enhanced terminal emulator
 
@@ -8,121 +8,117 @@ key_bindings:
 # environment variables. Some entries may override variables
 # set by alacritty it self.
 env:
-  # TERM env customization.
-  #
-  # If this property is not set, alacritty will set it to xterm-256color.
-  #
-  # Note that some xterm terminfo databases don't declare support for italics.
-  # You can verify this by checking for the presence of `smso` and `sitm` in
-  # `infocmp xterm-256color`.
-  TERM: xterm-256color
+    # TERM env customization.
+    #
+    # If this property is not set, alacritty will set it to xterm-256color.
+    #
+    # Note that some xterm terminfo databases don't declare support for italics.
+    # You can verify this by checking for the presence of `smso` and `sitm` in
+    # `infocmp xterm-256color`.
+    TERM: xterm-256color
 
 window:
-  opacity: 1.0
-  # Window dimensions in character columns and lines
-  # (changes require restart)
-  dimensions:
-    columns: 100
-    lines: 80
+    opacity: 1.0
+    # Window dimensions in character columns and lines
+    # (changes require restart)
+    dimensions:
+        columns: 100
+        lines: 30
 
-  # Adds this many blank pixels of padding around the window
-  # Units are physical pixels; this is not DPI aware.
-  # (change requires restart)
-  padding:
-    x: 0
-    y: 0
+    # Adds this many blank pixels of padding around the window
+    # Units are physical pixels; this is not DPI aware.
+    # (change requires restart)
+    padding:
+        x: 0
+        y: 0
 
-  # Window decorations
-  # Setting this to false will result in window without borders and title bar.
-  decorations: None
+    # Window decorations
+    # Setting this to false will result in window without borders and title bar.
+    decorations: None
 
-  startup_mode: Windowed
+    startup_mode: Windowed
 
-  dynamic_title: true
+    dynamic_title: true
 
-  option_as_alt: Both
+    option_as_alt: Both
 
 # When true, bold text is drawn using the bright variant of colors.
 draw_bold_text_with_bright_colors: true
 
 # Font configuration (changes require restart)
 font:
-  # The normal (roman) font face to use.
-  normal:
-    family: JetBrainsMono Nerd Font
-    # Style can be specified to pick a specific face.
-    style: Regular
+    # The normal (roman) font face to use.
+    normal:
+        family: JetBrainsMono Nerd Font
+        # Style can be specified to pick a specific face.
+        style: Regular
 
-  # The bold font face
-  bold:
-    family: JetBrainsMono Nerd Font
-    # Style can be specified to pick a specific face.
-    style: Bold
+    # The bold font face
+    bold:
+        family: JetBrainsMono Nerd Font
+        # Style can be specified to pick a specific face.
+        style: Bold
 
-  # The italic font face
-  italic:
-    family: JetBrainsMono Nerd Font
-    # Style can be specified to pick a specific face.
-    # style: Regular
+    # The italic font face
+    italic:
+        family: JetBrainsMono Nerd Font
+        # Style can be specified to pick a specific face.
+        # style: Regular
 
-  # Point size of the font
-  size: 11.9
+    # Point size of the font
+    size: 11.9
 
-  # Offset is the extra space around each character. offset.y can be thought of
-  # as modifying the linespacing, and offset.x as modifying the letter spacing.
-  offset:
-    x: 0
-    y: 0
+    # Offset is the extra space around each character. offset.y can be thought of
+    # as modifying the linespacing, and offset.x as modifying the letter spacing.
+    offset:
+        x: 0
+        y: 0
 
-  # Glyph offset determines the locations of the glyphs within their cells with
-  # the default being at the bottom. Increase the x offset to move the glyph to
-  # the right, increase the y offset to move the glyph upward.
-  glyph_offset:
-    x: 0
-    y: 0
+    # Glyph offset determines the locations of the glyphs within their cells with
+    # the default being at the bottom. Increase the x offset to move the glyph to
+    # the right, increase the y offset to move the glyph upward.
+    glyph_offset:
+        x: 0
+        y: 0
 
-  # Scale the font size based on the monitor's DPI. This will lead to bigger text on HiDPI
-  # screens and make reading text a little easier.
-  #scale_with_dpi: true
+    # Scale the font size based on the monitor's DPI. This will lead to bigger text on HiDPI
+    # screens and make reading text a little easier.
+    #scale_with_dpi: true
 
 # Should display the render timer
 debug.render_timer: false
 
 colors:
-  # Default colors
-  primary:
-    background: "#0E0E18"
-    foreground: "#e4d0a8"
+    # Default colors
+    primary:
+        background: "#0E0E18"
+        foreground: "#e4d0a8"
 
-  # cursor:
-  # text: "0x1E1D2F"
-  # cursor: "0xF5E0DC"
+    # Normal colors
 
-  # Normal colors
+    normal:
+        black: "#363646"
+        red: "#957fb8"
+        green: "#957fb8"
+        yellow: "#7e9cd8"
+        blue: "#e4d0a8"
+        magenta: "#D4A140"
+        cyan: "#F6C457"
+        white: "#efdaaf"
 
-  normal:
-    black: "#363646"
-    red: "#957fb8"
-    green: "#957fb8"
-    yellow: "#7e9cd8"
-    blue: "#e4d0a8"
-    magenta: "#D4A140"
-    cyan: "#F6C457"
-    white: "#efdaaf"
+    bright:
+        black: "#a7987a"
+        red: "#957fb8"
+        green: "#54546d"
+        yellow: "#4C3F47"
+        blue: "#90734E"
+        magenta: "#D4A140"
+        cyan: "#F6C457"
+        white: "#efdaaf"
 
-  bright:
-    black: "#a7987a"
-    red: "#957fb8"
-    green: "#54546d"
-    yellow: "#4C3F47"
-    blue: "#90734E"
-    magenta: "#D4A140"
-    cyan: "#F6C457"
-    white: "#efdaaf"
-
-  indexed_colors:
-    - { index: 16, color: "#0E0E18" }
-    - { index: 17, color: "#e4d0a8" }
+    indexed_colors:
+        - { index: 16, color: "#0E0E18" }
+        - { index: 17, color: "#e4d0a8" }
 # Visual Bell
 #
 # Any time the BEL code is received, Alacritty "rings" the visual bell. Once
@@ -146,8 +142,8 @@ colors:
 # To completely disable the visual bell, set its duration to 0.
 #
 bell:
-  animation: EaseOutExpo
-  duration: 0
+    animation: EaseOutExpo
+    duration: 0
 
 # Background opacity
 window.opacity: 0.0
@@ -168,45 +164,39 @@ window.opacity: 0.0
 # - PasteSelection
 # - Copy (TODO)
 mouse_bindings:
-  - { mouse: Middle, action: PasteSelection }
+    - { mouse: Middle, action: PasteSelection }
 
 mouse:
-  # Click settings
-  #
-  # The `double_click` and `triple_click` settings control the time
-  # alacritty should wait for accepting multiple clicks as one double
-  # or triple click.
-  double_click: { threshold: 300 }
-  triple_click: { threshold: 300 }
+    # Click settings
+    #
+    # The `double_click` and `triple_click` settings control the time
+    # alacritty should wait for accepting multiple clicks as one double
+    # or triple click.
+    double_click: { threshold: 300 }
+    triple_click: { threshold: 300 }
 
-  hide_when_typing: true
+    hide_when_typing: true
 
-  #url:
-  #  launcher: open
-  # Faux Scrollback
-  #
-  # The `faux_scrollback_lines` setting controls the number
-  # of lines the terminal should scroll when the alternate
-  # screen buffer is active. This is used to allow mouse
-  # scrolling for applications like `man`.
-  #
-  # To disable this completely, set `faux_scrollback_lines` to 0.
-  faux_scrolling_lines: 1
+    #url:
+    #  launcher: open
+    # Faux Scrollback
+    #
+    # The `faux_scrollback_lines` setting controls the number
+    # of lines the terminal should scroll when the alternate
+    # screen buffer is active. This is used to allow mouse
+    # scrolling for applications like `man`.
+    #
+    # To disable this completely, set `faux_scrollback_lines` to 0.
+    faux_scrolling_lines: 1
 
 selection:
-  semantic_escape_chars: ',│`|:"'' ()[]{}<>'
+    semantic_escape_chars: ',│`|:"'' ()[]{}<>'
 
-# Style of the cursor
-#
-# Values for 'cursor_style':
-# - Block
-# - Underline
-# - Beam
-# cursor:
-#   style:
-#     shape: Block
-#   blinking: Always
-# blink_interval: 500
+cursor:
+    style:
+        blinking: Always
+    blink_timeout: 0
+    blink_interval: 500
 
 # Live config reload (changes require restart)
 live_config_reload: true
@@ -218,7 +208,7 @@ live_config_reload: true
 # Entries in shell.args are passed unmodified as arguments to the shell.
 #
 shell:
-  program: /bin/zsh
+    program: /bin/zsh
 #   args:
 #     - --login
 # Key bindings

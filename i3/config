@@ -31,6 +31,8 @@ font pango:JetbrainsMono Nerd Font 7
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 
+exec_always --no-startup-id setxkbmap -model pc104 -layout us,ar -variant ,, -option grp:win_space_toggle
+
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
@@ -212,7 +214,7 @@ bindsym $mod+shift+x exec i3lock
 exec_always ~/.config/polybar/launch.sh
 exec_always feh --bg-fill ~/Pictures/Wallpapers/29-290537_blade-runner-2049-wallpaper-background-to-download-blade2.jpg
 
-exec_always --no-startup-id ~/picom/build/src/picom -b
+exec_always --no-startup-id picom -b
 
 # exec "setxkbmap -layout us,ar"
 # exec "setxkbmap -option 'grp:alt_shift_toggle'"
@@ -227,16 +229,14 @@ gaps outer 5 px
 # bindsym Shift+Print exec --no-startup-id maim --select "/home/$USER/Pictures/$(date)"
 
 ## Clipboard Screenshots
-bindsym Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
-bindsym Ctrl+Print exec --no-startup-id maim --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
-bindsym Shift+Print exec --no-startup-id maim --select -o | xclip -selection clipboard -t image/png
+bindsym Print exec --no-startup-id maim --hidecursor| xclip -selection clipboard -t image/png
+bindsym Ctrl+Print exec --no-startup-id maim ---hidecursor -window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
+bindsym Shift+Print exec --no-startup-id maim --select --hidecursor -o | xclip -selection clipboard -t image/png
 
 # bindsym Print exec gnome-screenshot
 # bindsym $mod+Print exec gnome-screenshot -a
 
-exec_always --no-startup-id setxkbmap -model pc104 -layout us,ar -variant ,, -option grp:win_space_toggle
 
-# exec_always --no-startup-id i3-msg 'workspace 1; exec alacritty -e nvim; workspace 1;'
 
 exec --no-startup-id xset s off -dpms
 
@@ -252,7 +252,7 @@ bindsym $mod+Shift+plus floating disable; floating enable
 
 set $i3_resurrect i3-resurrect
 
-exec --no-startup-id i3-msg "workspace 1; exec alacritty -e tmux new-session 'nvim'"
+exec --no-startup-id i3-msg "workspace 1; exec alacritty -e tmux new -s Default -c ./Code 'nvim'"
 
 # Save workspace mode.
 mode "save" {

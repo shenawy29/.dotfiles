@@ -84,15 +84,15 @@ font-3 = "Jetbrains Mono Nerd Font:size=10;2"
 
 modules-left = i3 xwindow
 ; modules-center = mpd
-modules-right = date
-; modules-right = date wlan battery pulseaudio
+# modules-right = date
+modules-right = date wlan battery 
 
 tray-position = none
 tray-padding = 2
 ; tray-background = #0063ff
 
 wm-restack = bspwm
-;wm-restack = i3
+# wm-restack = i3
 
 ;override-redirect = true
 
@@ -314,11 +314,11 @@ format-disconnected =
 type = internal/date
 interval = 5
 
-; date =
-; date-alt = " %Y-%m-%d"
+# date =
 ;
-date =    %%{F#99}%m/%d/%Y%%{F-}  %%{F#fff}%I:%M %p%{F-}
-date-alt = %%{F#fff}%A, %B %d, %Y  %%{F#fff}%I:%M %p%{F#666}%%{F#fba922}%S%%{F-}
+date =  %%{F#99}%d/%m/%Y%%{F-}  %%{F#fff}%I:%M %p%{F-}
+date-alt = %%{F#fff}%A, %B %d, %Y  %%{F#fff}%I:%M %p%{F-}
+# date-alt = " %Y-%m-%d"
 
 ; time = %H:%M
 ; time-alt = %H:%M:%S

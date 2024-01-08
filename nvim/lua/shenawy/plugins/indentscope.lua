@@ -31,7 +31,3 @@ return {
     })
   end,
 }
-
--- return {
---   "echasnovski/mini.indentscope",
--- }
