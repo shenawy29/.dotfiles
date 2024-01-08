@@ -1,4 +1,4 @@
 # .dotfiles
 My Neovim and Linux rice
 
-![image](https://github.com/shenawy29/.dotfiles/assets/111167226/4e583942-5c0f-4d95-bcc1-4c80b260e17c)
+![image](https://github.com/shenawy29/.dotfiles/assets/111167226/30c0e575-2c21-40a3-82bc-caff9c9ed322)
