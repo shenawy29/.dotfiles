@@ -85,8 +85,19 @@ return {
       on_attach = on_attach,
     })
 
+    lspconfig["bashls"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
     -- configure css server
     lspconfig["cssls"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
+    -- configure sysverilog server
+    lspconfig["svlangserver"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
@@ -115,6 +126,16 @@ return {
       on_attach = on_attach,
     })
 
+    -- configure assembly server
+    lspconfig["asm_lsp"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      filetypes = { "s", "asm" },
+      root_dir = function(_)
+        return vim.loop.cwd()
+      end,
+    })
+
     -- configure clang server
     lspconfig["clangd"].setup({
       capabilities = capabilities,
@@ -123,7 +144,7 @@ return {
       cmd = { "clangd" },
     })
 
-    -- configure sql server
+    -- configure sqlls server
     lspconfig["sqlls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
@@ -132,7 +153,7 @@ return {
       end,
     })
 
-    -- configure proto buffer server
+    -- configure bufls server
     lspconfig["bufls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
@@ -164,21 +185,21 @@ return {
       on_attach = on_attach,
     })
 
-    -- configure graphql  server
+    -- configure graphql language server
     lspconfig["graphql"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
       filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
     })
 
-    -- configure emmet  server
+    -- configure emmet language server
     lspconfig["emmet_ls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
       filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
     })
 
-    -- configure python  server
+    -- configure python server
     lspconfig["pyright"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
