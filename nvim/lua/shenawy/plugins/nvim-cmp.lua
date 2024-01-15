@@ -4,11 +4,11 @@ return {
   dependencies = {
     "hrsh7th/cmp-buffer", -- source for text in buffer
     "hrsh7th/cmp-path", -- source for file system paths
+    "L3MON4D3/LuaSnip", -- snippet engine
     "saadparwaiz1/cmp_luasnip", -- for autocompletion
     "rafamadriz/friendly-snippets", -- useful snippets
     "onsails/lspkind.nvim", -- vs-code like pictograms
   },
-
   config = function()
     local cmp = require("cmp")
 
@@ -20,58 +20,10 @@ return {
 
     local luasnip = require("luasnip")
 
-    vim.keymap.set({ "i", "s" }, "<C-l>", function()
-      if luasnip.choice_active() then
-        luasnip.change_choice(1)
-      end
-    end)
-
-    local s = luasnip.snippet
-    local sn = luasnip.snippet_node
-    local t = luasnip.text_node
-    local i = luasnip.insert_node
-    local f = luasnip.function_node
-    local fmt = require("luasnip.extras.fmt").fmt
-    local rep = require("luasnip.extras").rep
-    local c = luasnip.choice_node
-    local d = luasnip.dynamic_node
-    local r = luasnip.restore_node
-
     local lspkind = require("lspkind")
 
+    -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
     require("luasnip.loaders.from_vscode").lazy_load()
-
-    luasnip.add_snippets("all", {
-      s(
-        "jsd",
-        fmt(
-          [[
-        /**
-         * {1}
-         */
-        ]],
-          {
-            c(1, { i(1, "This is a description."), t("") }),
-          }
-        )
-      ),
-      s("jsc", t("@constructor")),
-      s(
-        "jsp",
-        fmt(
-          "@param {{{1}}} {2} {3}",
-          { i(1, "datatype"), i(2, "name"), c(3, { fmt(" - {1}", i(1, "description")), t("") }) }
-        )
-      ),
-      s("jsr", fmt("@returns {{{1}}} {2}", { i(1, "datatype"), c(2, { fmt("{1}", i(1, "description")), t("") }) })),
-      s(
-        "jst",
-        fmt(
-          "@throws {1} {2}",
-          { c(1, { fmt("{{{1}}}", i(1, "error type")), t("") }), c(2, { i(2, "error descripion"), t("") }) }
-        )
-      ),
-    })
 
     cmp.setup({
       completion = {
@@ -93,6 +45,10 @@ return {
         ["<CR>"] = cmp.mapping.confirm({ select = false }),
 
         ["<Tab>"] = cmp.mapping(function(fallback)
+          -- if cmp.visible() then
+          --   cmp.select_next_item()
+          -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
+          -- that way you will only jump inside the snippet region
           if luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
           elseif has_words_before() then
@@ -103,6 +59,8 @@ return {
         end, { "i", "s" }),
 
         ["<S-Tab>"] = cmp.mapping(function(fallback)
+          -- if cmp.visible() then
+          --   cmp.select_prev_item()
           if luasnip.jumpable(-1) then
             luasnip.jump(-1)
           else
@@ -111,6 +69,7 @@ return {
         end, { "i", "s" }),
       }),
 
+      -- sources for autocompletion
       sources = cmp.config.sources({
         { name = "nvim_lsp" },
         { name = "luasnip" }, -- snippets

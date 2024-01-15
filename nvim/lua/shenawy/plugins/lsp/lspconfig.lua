@@ -68,7 +68,6 @@ return {
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
 
-    -- configure html server with plugin
     lspconfig["html"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
@@ -78,27 +77,15 @@ return {
     lspconfig["omnisharp"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
-      root_dir = function(_)
-        return vim.loop.cwd()
-      end,
     })
 
     -- configure typescript server with plugin
     lspconfig["tsserver"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
-      root_dir = function(_)
-        return vim.loop.cwd()
-      end,
     })
 
-    -- configure bash server with plugin
     lspconfig["bashls"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
-    lspconfig["jsonls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
@@ -133,12 +120,6 @@ return {
       on_attach = on_attach,
     })
 
-    -- configure haskell server
-    lspconfig["hls"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
     -- configure go server
     lspconfig["gopls"].setup({
       capabilities = capabilities,
@@ -159,7 +140,7 @@ return {
     lspconfig["clangd"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
-      filetypes = { "c", "cc", "cpp", "hpp", "h" },
+      filetypes = { "c", "cc", "cpp" },
       cmd = { "clangd" },
     })
 
@@ -209,6 +190,13 @@ return {
       capabilities = capabilities,
       on_attach = on_attach,
       filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
+    })
+
+    -- configure emmet language server
+    lspconfig["emmet_ls"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
     })
 
     -- configure python server
