@@ -1,38 +1,38 @@
 return {
   "stevearc/conform.nvim",
-  lazy = true,
-  event = { "BufReadPre", "BufNewFile" }, -- to disable, comment this out
-  config = function()
-    local conform = require("conform")
-
-    conform.setup({
-      formatters_by_ft = {
-        javascript = { "prettierd" },
-        typescript = { "prettierd" },
-        javascriptreact = { "prettierd" },
-        typescriptreact = { "prettierd" },
-        svelte = { "prettierd" },
-        css = { "prettierd" },
-        json = { "prettierd" },
-        yaml = { "prettierd" },
-        markdown = { "prettierd" },
-        graphql = { "prettierd" },
-        lua = { "stylua" },
-        python = { "black" },
-      },
-      format_on_save = {
-        lsp_fallback = true,
-        async = false,
-        timeout_ms = 1000,
-      },
-    })
-
-    vim.keymap.set({ "n", "v" }, "<leader><leader>", function()
-      conform.format({
-        lsp_fallback = true,
-        async = false,
-        timeout_ms = 1000,
-      })
-    end, { desc = "Format file or range (in visual mode)" })
+  event = { "BufWritePre" },
+  cmd = { "ConformInfo" },
+  keys = {
+    {
+      "<leader><leader>",
+      function()
+        require("conform").format({ async = true, lsp_fallback = true })
+      end,
+      mode = "",
+      desc = "Format buffer",
+    },
+  },
+  opts = {
+    formatters_by_ft = {
+      javascript = { "prettierd" },
+      typescript = { "prettierd" },
+      javascriptreact = { "prettierd" },
+      typescriptreact = { "prettierd" },
+      svelte = { "prettierd" },
+      html = { "prettierd" },
+      css = { "prettierd" },
+      json = { "prettierd" },
+      yaml = { "prettierd" },
+      markdown = { "prettierd" },
+      graphql = { "prettierd" },
+      lua = { "stylua" },
+      sh = { "shfmt" },
+      python = { "black" },
+    },
+    format_on_save = { timeout_ms = 500, lsp_fallback = true },
+  },
+  init = function()
+    -- If you want the formatexpr, here is the place to set it
+    vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
   end,
 }
