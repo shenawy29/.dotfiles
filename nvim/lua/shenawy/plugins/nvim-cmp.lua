@@ -41,7 +41,7 @@ return {
 
     require("luasnip.loaders.from_vscode").lazy_load()
 
-    luasnip.add_snippets("all", {
+    luasnip.add_snippets("javascript", {
       s(
         "jsd",
         fmt(

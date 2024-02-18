@@ -4,7 +4,6 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     build = ":TSUpdate",
     dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
       "windwp/nvim-ts-autotag",
     },
     config = function()
@@ -13,6 +12,7 @@ return {
       treesitter.setup({
         highlight = {
           enable = true,
+          additional_vim_regex_highlighting = true,
         },
 
         sync_install = true,

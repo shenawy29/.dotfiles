@@ -13,7 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({ { import = "shenawy.plugins" }, { import = "shenawy.plugins.lsp" } }, {
   install = {
-    colorscheme = { "nightfly" },
+    colorscheme = { "kanagawa-wave" },
   },
   checker = {
     enabled = true,

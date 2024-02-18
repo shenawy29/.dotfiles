@@ -5,7 +5,6 @@ return {
     config = function()
       -- load the colorscheme here
       require("kanagawa").setup({
-
         colors = {
           theme = {
             all = {

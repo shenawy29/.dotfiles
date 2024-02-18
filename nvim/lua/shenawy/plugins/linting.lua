@@ -12,7 +12,9 @@ return {
       -- typescriptreact = { "eslint_d" },
       -- svelte = { "eslint_d" },
       python = { "ruff" },
-      go = { "golangcilint" },
+      -- go = { "golangcilint" },
+      -- sh = { "shellcheck" },
+      cmake = { "cmakelint" },
       -- proto = { "buf_lint" },
     }
 

@@ -2,16 +2,12 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-
 export ZSH="$HOME/.oh-my-zsh"
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="robbyrussell"
-
-ZSH_THEME="agnoster" 
+ZSH_THEME="agnoster"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -21,7 +17,6 @@ ZSH_THEME="agnoster"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
-
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
@@ -74,15 +69,9 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-
-
-source ~/.profile
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting vi-mode tmux)
-
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting vi-mode colored-man-pages)
 
 source $ZSH/oh-my-zsh.sh
-
-# (cat ~/.cache/wal/sequences &)
 
 # User configuration
 
@@ -110,38 +99,30 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias vim="nvim"
-alias air="~/.air"
+alias help="run-help"
 alias v="nvim"
-alias v.="nvim ."
-alias cd..="cd .."
+alias :q="tmux kill-server"
+alias t="tmux"
 
-# export PS1="\W \$"
+alias clean="sudo pacman -Rcs $(pacman -Qdtq)"
+alias sync="sudo pacman -Syyu"
+alias get="sudo pacman -S"
+alias remove="sudo pacman -R"
 
-# if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-#   exec tmux
-# fi
+prompt_context () { }
 
+bindkey -s ^f "tmux-sessionizer\n"
 
-# pnpm
-export PNPM_HOME="/home/shenawy29/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
+export SUDO_EDITOR=/usr/bin/nvim
+export EDITOR=/usr/bin/nvim
 
 # bun completions
-[ -s "/home/shenawy29/.bun/_bun" ] && source "/home/shenawy29/.bun/_bun"
+[ -s "/home/shenawy/.bun/_bun" ] && source "/home/shenawy/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+eval "$(zoxide init --cmd cd zsh)"
 
-
-bindkey -s ^f "tmux-sessionizer\n"
-
-prompt_context () { }
-
-[ -f "/home/shenawy29/.ghcup/env" ] && source "/home/shenawy29/.ghcup/env" # ghcup-env
+# Created by `pipx` on 2024-02-17 11:59:53
+export PATH="$PATH:/home/shenawy/.local/bin"
