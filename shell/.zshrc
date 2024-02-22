@@ -104,10 +104,12 @@ alias v="nvim"
 alias :q="tmux kill-server"
 alias t="tmux"
 
-alias clean="sudo pacman -Rcs $(pacman -Qdtq)"
+alias clean='sudo pacman -Rcs $(pacman -Qdtq)'
 alias sync="sudo pacman -Syyu"
 alias get="sudo pacman -S"
 alias remove="sudo pacman -R"
+alias ls="exa"
+alias air="~/go/bin/air"
 
 prompt_context () { }
 
