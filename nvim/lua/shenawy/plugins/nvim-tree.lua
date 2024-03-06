@@ -7,6 +7,12 @@ return {
   },
   config = function()
     vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>")
-    require("nvim-tree").setup({})
+
+    require("nvim-tree").setup({
+      filters = {
+        dotfiles = true,
+        -- git_clean = true,
+      },
+    })
   end,
 }

@@ -1,7 +1,3 @@
--- vim.opt.fillchars = { eob = " " }
---
-vim.g.mapleader = " "
-
 vim.opt.guicursor = ""
 
 vim.filetype.add({
@@ -42,12 +38,11 @@ vim.opt.updatetime = 50
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
--- vim.wo.foldtext = "v:lua.vim.treesitter.foldtext()"
--- vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-vim.opt.foldlevel = 20
+vim.opt.foldlevel = 99
+
+vim.opt.foldlevelstart = 99
 vim.opt.foldenable = false
 
 vim.opt.cursorline = true

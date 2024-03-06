@@ -38,6 +38,8 @@ keymap.set("i", "<C-d>", "<C-d>zz")
 
 keymap.set("n", "<leader>k", "<cmd>cprev<CR>zz")
 keymap.set("n", "<leader>j", "<cmd>cnext<CR>zz")
+keymap.set("n", "<leader>h", "<cmd>cfirst<CR>zz")
+keymap.set("n", "<leader>l", "<cmd>clast<CR>zz")
 
 keymap.set("n", "<leader>w", function()
   local qf_exists = false

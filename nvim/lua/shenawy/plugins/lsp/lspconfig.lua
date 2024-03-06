@@ -5,6 +5,24 @@ return {
     "hrsh7th/cmp-nvim-lsp",
   },
   config = function()
+    vim.diagnostic.config({
+      virtual_text = {
+        source = "if_many",
+        prefix = "● ",
+      },
+      update_in_insert = true,
+      underline = true,
+      severity_sort = true,
+      float = {
+        focusable = false,
+        style = "minimal",
+        border = "rounded",
+        source = "if_many",
+        header = "",
+        prefix = "",
+      },
+    })
+
     local lspconfig = require("lspconfig")
 
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
@@ -33,25 +51,29 @@ return {
       end, { noremap = true, silent = true })
 
       opts.desc = "See available code actions"
-      keymap.set({ "n", "v" }, "<leader>vca", vim.lsp.buf.code_action, opts)
+      keymap.set({ "n", "v" }, "<leader>vca", ":Lspsaga code_action<CR>", opts)
 
       opts.desc = "Smart rename"
-      keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+
+      keymap.set("n", "<leader>rn", ":Lspsaga rename<CR>", opts)
 
       opts.desc = "Show buffer diagnostics"
 
-      keymap.set("n", "<leader>vd", function()
-        vim.diagnostic.open_float()
-      end, opts)
+      keymap.set("n", "<leader>fi", ":Lspsaga finder imp<CR>", opts)
+
+      keymap.set("n", "<leader>vd", ":Lspsaga show_line_diagnostics<CR>", opts)
 
       opts.desc = "Go to previous diagnostic"
-      keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+      keymap.set("n", "[d", ":Lspsaga diagnostic_jump_prev<CR>", opts)
 
       opts.desc = "Go to next diagnostic"
-      keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+      keymap.set("n", "]d", ":Lspsaga diagnostic_jump_next<CR>", opts)
 
       opts.desc = "Show documentation for what is under cursor"
-      keymap.set("n", "K", vim.lsp.buf.hover, opts)
+
+      keymap.set("n", "K", ":Lspsaga hover_doc<CR>", opts)
+
+      -- keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 
       opts.desc = "Restart LSP"
       keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
@@ -93,6 +115,11 @@ return {
     })
 
     lspconfig["lua_ls"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
+    lspconfig["ocamllsp"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
@@ -200,9 +227,15 @@ return {
       on_attach = on_attach,
       settings = {
         pylsp = {
-          pylsp_mypy = {
-            enabled = true,
-          },
+          pylsp_mypy = { enabled = true },
+          -- black = { enabled = true },
+          -- autopep8 = { enabled = false },
+          -- yapf = { enabled = false },
+          -- pylint = { enabled = true, executable = "pylint" },
+          -- pyflakes = { enabled = false },
+          -- pycodestyle = { enabled = false },
+          -- jedi_completion = { fuzzy = true },
+          -- pyls_isort = { enabled = true },
         },
       },
     })

@@ -1,7 +1,7 @@
 return {
-  "nvim-lua/plenary.nvim", -- lua functions that many plugins use
+  "nvim-lua/plenary.nvim",
 
-  "christoomey/vim-tmux-navigator", -- tmux & split window navigation
+  "christoomey/vim-tmux-navigator",
 
-  "inkarkat/vim-ReplaceWithRegister", -- replace with register contents using motion (gr + motion)
+  "inkarkat/vim-ReplaceWithRegister",
 }

@@ -2,11 +2,17 @@ return {
   "nvim-tree/nvim-web-devicons",
   config = function()
     require("nvim-web-devicons").set_icon({
-      gql = {
-        icon = "",
-        color = "#e535ab",
+      proto = {
+        icon = "",
+        color = "#8bddde",
         cterm_color = "199",
-        name = "GraphQL",
+        name = "Proto",
+      },
+      norg = {
+        icon = "",
+        color = "#3f5591",
+        cterm_color = "199",
+        name = "Neorg",
       },
     })
   end,

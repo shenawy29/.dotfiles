@@ -20,18 +20,14 @@ keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
 
 keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
 
-keymap.set({ "n", "v" }, "<leader>vca", vim.lsp.buf.code_action, opts)
+keymap.set({ "n", "v" }, "<leader>vca", ":Lspsaga code_action<CR>", opts)
 
-keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+keymap.set("n", "<leader>rn", ":Lspsaga rename<CR>", opts)
 
-keymap.set("n", "<leader>vd", function()
-  vim.diagnostic.open_float()
-end, opts)
+keymap.set("n", "<leader>vd", ":Lspsaga show_line_diagnostics<CR>", opts)
 
-keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+keymap.set("n", "]d", ":Lspsaga diagnostic_jump_next<CR>", opts)
 
-keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-
-keymap.set("n", "K", vim.lsp.buf.hover, opts)
+keymap.set("n", "K", ":Lspsaga hover_doc<CR>", opts)
 
 keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
