@@ -1,5 +1,6 @@
 return {
   "stevearc/conform.nvim",
+  lazy = true,
   event = { "BufWritePre" },
   cmd = { "ConformInfo" },
   keys = {
@@ -19,6 +20,7 @@ return {
       javascriptreact = { "prettierd" },
       typescriptreact = { "prettierd" },
       svelte = { "prettierd" },
+      python = { "black", "isort" },
       html = { "prettierd" },
       css = { "prettierd" },
       json = { "prettierd" },
@@ -28,9 +30,8 @@ return {
       lua = { "stylua" },
       sh = { "shfmt" },
       ocaml = { "ocamlformat" },
-      -- python = { "ruff_format" },
       cmake = { "cmakelang" },
-      -- asm = { "asmfmt" },
+      asm = { "asmfmt" },
     },
     format_on_save = { timeout_ms = 500, lsp_fallback = true },
   },

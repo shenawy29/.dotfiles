@@ -1,18 +1,26 @@
 return {
   "nvimdev/lspsaga.nvim",
-  event = "VeryLazy",
+  lazy = true,
+  event = "LspAttach",
   config = function()
-    require("lspsaga").setup({
+    local lspsaga = require("lspsaga")
+
+    lspsaga.setup({
       symbol_in_winbar = {
         enable = false,
       },
       lightbulb = {
         enable = false,
       },
+      ui = {
+        border = "rounded",
+      },
+      code_action = {
+        extend_gitsigns = true,
+      },
     })
   end,
   dependencies = {
     "nvim-treesitter/nvim-treesitter",
-    "nvim-tree/nvim-web-devicons",
   },
 }

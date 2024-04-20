@@ -1,5 +1,6 @@
 return {
   "hrsh7th/nvim-cmp",
+  lazy = true,
   event = "InsertEnter",
   dependencies = {
     "hrsh7th/cmp-buffer",
@@ -27,15 +28,12 @@ return {
     end)
 
     local s = luasnip.snippet
-    local sn = luasnip.snippet_node
     local t = luasnip.text_node
     local i = luasnip.insert_node
-    local f = luasnip.function_node
     local fmt = require("luasnip.extras.fmt").fmt
-    local rep = require("luasnip.extras").rep
     local c = luasnip.choice_node
-    local d = luasnip.dynamic_node
-    local r = luasnip.restore_node
+
+    vim.api.nvim_set_hl(0, "CmpNormal", { bg = "#16161d" })
 
     local lspkind = require("lspkind")
 
@@ -82,6 +80,17 @@ return {
           luasnip.lsp_expand(args.body)
         end,
       },
+      window = {
+        documentation = {
+          border = "rounded",
+          winhighlight = "Normal:CmpNormal",
+        },
+
+        completion = {
+          border = "rounded",
+          winhighlight = "Normal:CmpNormal",
+        },
+      },
 
       mapping = cmp.mapping.preset.insert({
         ["<C-k>"] = cmp.mapping.select_prev_item(),
@@ -90,11 +99,13 @@ return {
         ["<C-d>"] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.abort(),
-        ["<CR>"] = cmp.mapping.confirm({ select = false }),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
 
         ["<Tab>"] = cmp.mapping(function(fallback)
-          if luasnip.expand_or_locally_jumpable() then
-            luasnip.expand_or_jump()
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif luasnip.expand_or_locally_jumpable() then
+            luasnip.jump(1)
           elseif has_words_before() then
             cmp.complete()
           else
@@ -103,7 +114,9 @@ return {
         end, { "i", "s" }),
 
         ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if luasnip.jumpable(-1) then
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.jumpable(-1) then
             luasnip.jump(-1)
           else
             fallback()

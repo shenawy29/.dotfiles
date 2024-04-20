@@ -1,7 +1,11 @@
 return {
-  "nvim-lua/plenary.nvim",
+  { "nvim-lua/plenary.nvim" },
 
   "christoomey/vim-tmux-navigator",
 
-  "inkarkat/vim-ReplaceWithRegister",
+  {
+    "inkarkat/vim-ReplaceWithRegister",
+    lazy = true,
+    event = { "BufReadPre", "BufNewFile" },
+  },
 }

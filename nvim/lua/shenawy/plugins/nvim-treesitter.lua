@@ -12,16 +12,16 @@ return {
       treesitter.setup({
         highlight = {
           enable = true,
-          additional_vim_regex_highlighting = true,
+          additional_vim_regex_highlighting = false,
         },
+
+        indent = { enable = true },
 
         sync_install = true,
 
         ignore_install = {},
 
         auto_install = true,
-
-        indent = { enable = true },
 
         ensure_installed = {
           "json",
@@ -56,6 +56,9 @@ return {
         },
         autotag = {
           enable = true,
+          enable_rename = true,
+          enable_close = true,
+          enable_close_on_slash = true,
         },
       })
     end,

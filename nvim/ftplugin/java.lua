@@ -22,12 +22,14 @@ keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
 
 keymap.set({ "n", "v" }, "<leader>vca", ":Lspsaga code_action<CR>", opts)
 
+keymap.set("n", "<leader>o", ":Lspsaga outline<CR>", opts)
+
 keymap.set("n", "<leader>rn", ":Lspsaga rename<CR>", opts)
 
 keymap.set("n", "<leader>vd", ":Lspsaga show_line_diagnostics<CR>", opts)
 
 keymap.set("n", "]d", ":Lspsaga diagnostic_jump_next<CR>", opts)
 
-keymap.set("n", "K", ":Lspsaga hover_doc<CR>", opts)
+keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 
 keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)

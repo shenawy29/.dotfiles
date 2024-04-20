@@ -1,47 +1,45 @@
-vim.g.mapleader = " "
+local map = vim.keymap.set
 
-local keymap = vim.keymap
+map("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
+map("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" }) -- split window horizontally
+map("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" }) -- make split windows equal width & height
+map("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" }) -- close current split window
 
--- keymap.set("n", "x", '"_x')
+map("x", "@", function()
+  return ":norm @" .. vim.fn.getcharstr() .. "<cr>"
+end, { expr = true })
 
-keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
-keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" }) -- split window horizontally
-keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" }) -- make split windows equal width & height
-keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" }) -- close current split window
+map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
-keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+map("v", "<S-j>", ":m '>+1<CR>gv=gv")
+map("v", "<S-k>", ":m '<-2<CR>gv=gv")
 
-keymap.set("v", "<S-j>", ":m '>+1<CR>gv=gv")
-keymap.set("v", "<S-k>", ":m '<-2<CR>gv=gv")
-
--- keymap.set({ "n", "v" }, "<leader>y", [["+y]]) -- yank motion
+-- map({ "n", "v" }, "<leader>y", [["+y]]) -- yank motion
 --
--- keymap.set({ "n", "v" }, "<leader>d", [["+d]]) -- delete motion
+-- map({ "n", "v" }, "<leader>d", [["+d]]) -- delete motion
 --
--- keymap.set({ "n", "v" }, "<leader>p", [["+P]]) -- paste before cursor
+-- map({ "n", "v" }, "<leader>p", [["+P]]) -- paste before cursor
 
--- keymap.set("c", "<C-u>", "<Home>")
--- keymap.set("c", "<C-d>", "<End>")
--- keymap.set("c", "<C-h>", "<Left>")
--- keymap.set("c", "<C-k>", "<Up>")
--- keymap.set("c", "<C-j>", "<Down>")
--- keymap.set("c", "<C-l>", "<Right>")
--- keymap.set("c", "<C-b>", "<S-Left>")
--- keymap.set("c", "<C-e>", "<S-Right>")
+map("c", "<C-h>", "<Left>")
+map("c", "<C-k>", "<Up>")
+map("c", "<C-j>", "<Down>")
+map("c", "<C-l>", "<Right>")
+map("c", "<C-u>", "<S-Left>")
+map("c", "<C-d>", "<S-Right>")
 
--- keymap.set({ "n", "v" }, ":", ":<C-f>i")
--- keymap.set("c", ":", ":<C-f>i")
+-- map({ "n", "v" }, ":", ":<C-f>i")
+-- map("c", ":", ":<C-f>i")
 
-keymap.set("n", "<C-u>", "<C-u>zz")
-keymap.set("n", "<C-d>", "<C-d>zz")
-keymap.set("i", "<C-d>", "<C-d>zz")
+map("n", "<C-u>", "<C-u>zz")
+map("n", "<C-d>", "<C-d>zz")
+map("i", "<C-d>", "<C-d>zz")
 
-keymap.set("n", "<leader>k", "<cmd>cprev<CR>zz")
-keymap.set("n", "<leader>j", "<cmd>cnext<CR>zz")
-keymap.set("n", "<leader>h", "<cmd>cfirst<CR>zz")
-keymap.set("n", "<leader>l", "<cmd>clast<CR>zz")
+map("n", "<leader>k", "<cmd>cprev<CR>zz")
+map("n", "<leader>j", "<cmd>cnext<CR>zz")
+map("n", "<leader>h", "<cmd>cfirst<CR>zz")
+map("n", "<leader>l", "<cmd>clast<CR>zz")
 
-keymap.set("n", "<leader>w", function()
+map("n", "<leader>w", function()
   local qf_exists = false
   for _, win in pairs(vim.fn.getwininfo()) do
     if win["quickfix"] == 1 then
@@ -57,19 +55,21 @@ keymap.set("n", "<leader>w", function()
   end
 end)
 
-keymap.set("v", "<S-k>", ":m '<-2<CR>gv=gv")
+map("v", "<S-k>", ":m '<-2<CR>gv=gv")
 
-keymap.set({ "n", "v", "o" }, "<leader>z", function()
+map({ "n", "v", "o" }, "<leader>z", function()
   vim.cmd("normal %")
 end)
 
-keymap.set({ "n", "v", "o" }, "H", "^")
+map({ "n", "v", "o" }, "H", "^")
+map({ "n", "v", "o" }, "L", "$")
 
-keymap.set({ "n", "v", "o" }, "L", "$")
+vim.keymap.del("s", "L")
+vim.keymap.del("s", "H")
 
-keymap.set("n", "<leader>q", "<C-^>")
+map("n", "<leader>q", "<C-^>")
 
-keymap.set("n", "<leader>c", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+map("n", "<leader>c", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 

@@ -1,11 +1,13 @@
 return {
   "neovim/nvim-lspconfig",
+  lazy = true,
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
   },
   config = function()
     vim.diagnostic.config({
+      signs = true,
       virtual_text = {
         source = "if_many",
         prefix = "● ",
@@ -34,48 +36,34 @@ return {
     local on_attach = function(_, bufnr)
       opts.buffer = bufnr
 
-      opts.desc = "Show LSP references"
       keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
 
-      opts.desc = "Go to declaration"
       keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 
-      opts.desc = "Show LSP definitions"
       keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
 
-      opts.desc = "Show LSP type definitions"
       keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
 
-      vim.keymap.set("n", "<leader>gi", function()
+      keymap.set("n", "<leader>gi", function()
         require("telescope.builtin").lsp_references()
       end, { noremap = true, silent = true })
 
-      opts.desc = "See available code actions"
       keymap.set({ "n", "v" }, "<leader>vca", ":Lspsaga code_action<CR>", opts)
-
-      opts.desc = "Smart rename"
 
       keymap.set("n", "<leader>rn", ":Lspsaga rename<CR>", opts)
 
-      opts.desc = "Show buffer diagnostics"
+      keymap.set("n", "<leader>o", ":Lspsaga outline<CR>", opts)
 
       keymap.set("n", "<leader>fi", ":Lspsaga finder imp<CR>", opts)
 
       keymap.set("n", "<leader>vd", ":Lspsaga show_line_diagnostics<CR>", opts)
 
-      opts.desc = "Go to previous diagnostic"
       keymap.set("n", "[d", ":Lspsaga diagnostic_jump_prev<CR>", opts)
 
-      opts.desc = "Go to next diagnostic"
       keymap.set("n", "]d", ":Lspsaga diagnostic_jump_next<CR>", opts)
 
-      opts.desc = "Show documentation for what is under cursor"
+      keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 
-      keymap.set("n", "K", ":Lspsaga hover_doc<CR>", opts)
-
-      -- keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-
-      opts.desc = "Restart LSP"
       keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
     end
 
@@ -88,12 +76,18 @@ return {
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
 
+    lspconfig["htmx"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      filetypes = { "templ", "html" },
+    })
+
     lspconfig["html"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
 
-    lspconfig["kotlin_language_server"].setup({
+    lspconfig["zls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
@@ -107,6 +101,14 @@ return {
     })
 
     lspconfig["tsserver"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      root_dir = function(_)
+        return vim.loop.cwd()
+      end,
+    })
+
+    lspconfig["hls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
       root_dir = function(_)
@@ -219,25 +221,18 @@ return {
     lspconfig["graphql"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
-      filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
+      filetypes = {
+        "graphql",
+        "gql",
+        "svelte",
+        "typescriptreact",
+        "javascriptreact",
+      },
     })
 
-    lspconfig["pylsp"].setup({
+    lspconfig["basedpyright"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
-      settings = {
-        pylsp = {
-          pylsp_mypy = { enabled = true },
-          -- black = { enabled = true },
-          -- autopep8 = { enabled = false },
-          -- yapf = { enabled = false },
-          -- pylint = { enabled = true, executable = "pylint" },
-          -- pyflakes = { enabled = false },
-          -- pycodestyle = { enabled = false },
-          -- jedi_completion = { fuzzy = true },
-          -- pyls_isort = { enabled = true },
-        },
-      },
     })
   end,
 }
