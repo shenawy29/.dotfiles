@@ -19,6 +19,7 @@ return {
       "oil",
       "lspinfo",
       "conf",
+      "text",
     },
   },
 }

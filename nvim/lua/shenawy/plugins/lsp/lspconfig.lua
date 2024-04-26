@@ -25,6 +25,10 @@ return {
       },
     })
 
+    require("neodev").setup({
+      library = { plugins = { "neotest" }, types = true },
+    })
+
     local lspconfig = require("lspconfig")
 
     local cmp_nvim_lsp = require("cmp_nvim_lsp")

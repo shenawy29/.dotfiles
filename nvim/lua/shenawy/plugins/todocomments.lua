@@ -4,7 +4,7 @@ return {
   lazy = true,
   config = function()
     require("todo-comments").setup({})
-    vim.keymap.set("n", "<leader>t", ":TodoTelescope<CR>")
+    vim.keymap.set("n", "<leader>t", ":TodoTelescope<CR>", { silent = true })
 
     vim.keymap.set("n", "]t", function()
       require("todo-comments").jump_next()
