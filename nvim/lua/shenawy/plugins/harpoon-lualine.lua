@@ -1,4 +1,4 @@
 return {
-  "letieu/harpoon-lualine",
-  dependencies = { "ThePrimeagen/harpoon" },
+	"letieu/harpoon-lualine",
+	dependencies = { "ThePrimeagen/harpoon" },
 }

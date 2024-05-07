@@ -1,5 +1,5 @@
 return {
-  lazy = true,
-  event = { "BufReadPre", "BufNewFile" },
-  "stevearc/dressing.nvim",
+	lazy = true,
+	event = { "BufReadPre", "BufNewFile" },
+	"stevearc/dressing.nvim",
 }
