@@ -6,6 +6,8 @@ return {
 		"hrsh7th/cmp-nvim-lsp",
 	},
 	config = function()
+		local HOME = vim.fn.expand("$HOME")
+
 		vim.diagnostic.config({
 			signs = true,
 			virtual_text = {
@@ -40,23 +42,17 @@ return {
 		local on_attach = function(_, bufnr)
 			opts.buffer = bufnr
 
-			keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
+			-- keymap.set("n", "<leader>gi", function()
+			-- 	require("telescope.builtin").lsp_references()
+			-- end, { noremap = true, silent = true })
 
-			keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-
-			keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
-
-			keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
-
-			keymap.set("n", "<leader>gi", function()
-				require("telescope.builtin").lsp_references()
-			end, { noremap = true, silent = true })
-
-			keymap.set({ "n", "v" }, "<leader>vca", ":Lspsaga code_action<CR>", opts)
+			keymap.set({ "n", "v" }, "<leader>vca", ":lua vim.lsp.buf.code_action()<CR>", opts)
 
 			keymap.set("n", "<leader>rn", ":Lspsaga rename<CR>", opts)
 
-			keymap.set("n", "<leader>o", ":Lspsaga outline<CR>", opts)
+			-- keymap.set("n", "<leader>o", ":Lspsaga outline<CR>", opts)
+
+			keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
 
 			keymap.set("n", "<leader>fi", ":Lspsaga finder imp<CR>", opts)
 
@@ -104,10 +100,20 @@ return {
 		lspconfig["omnisharp"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
+
+			cmd = { HOME .. "/.local/share/nvim/mason/bin/omnisharp" },
 			root_dir = function(_)
 				return vim.loop.cwd()
 			end,
 		})
+
+		-- lspconfig["csharp_ls"].setup({
+		-- 	capabilities = capabilities,
+		-- 	on_attach = on_attach,
+		-- 	root_dir = function(_)
+		-- 		return vim.loop.cwd()
+		-- 	end,
+		-- })
 
 		lspconfig["tsserver"].setup({
 			capabilities = capabilities,
@@ -125,6 +131,11 @@ return {
 			end,
 		})
 
+		lspconfig["zls"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
 		lspconfig["lua_ls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
@@ -133,6 +144,9 @@ return {
 		lspconfig["ocamllsp"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
+			root_dir = function(_)
+				return vim.loop.cwd()
+			end,
 		})
 
 		lspconfig["bashls"].setup({
@@ -166,6 +180,11 @@ return {
 		})
 
 		lspconfig["cmake"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		lspconfig["phpactor"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})

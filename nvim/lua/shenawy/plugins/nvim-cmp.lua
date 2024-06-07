@@ -1,6 +1,5 @@
 return {
 	"hrsh7th/nvim-cmp",
-	lazy = true,
 	event = "InsertEnter",
 	dependencies = {
 		"hrsh7th/cmp-buffer",
@@ -44,10 +43,10 @@ return {
 				"jsd",
 				fmt(
 					[[
-        /**
-         * {1}
-         */
-        ]],
+		      /**
+		       * {1}
+		       */
+		      ]],
 					{
 						c(1, { i(1, "This is a description."), t("") }),
 					}

@@ -3,11 +3,63 @@ return {
 	event = { "BufReadPre", "BufNewFile", "CmdlineEnter" },
 	lazy = true,
 	dependencies = {
-		{ "williamboman/mason-lspconfig.nvim", cmd = { "LspInstall", "LspUninstall" } },
-		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		{
+			"williamboman/mason-lspconfig.nvim",
+			cmd = { "LspInstall", "LspUninstall" },
+		},
+		{
+			"jay-babu/mason-nvim-dap.nvim",
+		},
+		{
+			"mfussenegger/nvim-dap",
+		},
+		{
+			"WhoIsSethDaniel/mason-tool-installer.nvim",
+		},
+		{
+			"rcarriga/nvim-dap-ui",
+		},
 	},
 	config = function()
-		require("mason").setup({})
+		local dap = require("dap")
+		local dapui = require("dapui")
+		dapui.setup()
+		dap.listeners.before.attach.dapui_config = function()
+			dapui.open()
+		end
+		dap.listeners.before.launch.dapui_config = function()
+			dapui.open()
+		end
+		dap.listeners.before.event_terminated.dapui_config = function()
+			dapui.close()
+		end
+		dap.listeners.before.event_exited.dapui_config = function()
+			dapui.close()
+		end
+
+		require("mason").setup({
+			ui = {
+				icons = {
+					package_installed = "✓",
+					package_pending = "➜",
+					package_uninstalled = "✗",
+				},
+			},
+		})
+
+		require("mason-nvim-dap").setup({
+			ensure_installed = { "python", "delve" },
+			handlers = {
+				function(config)
+					require("mason-nvim-dap").default_setup(config)
+				end,
+			},
+		})
+
+		vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint)
+		vim.keymap.set("n", "<leader>ds", dap.continue)
+		vim.keymap.set("n", "<leader>dn", dap.step_into)
+		vim.keymap.set("n", "<leader>dq", dap.terminate)
 
 		local mason_lspconfig = require("mason-lspconfig")
 		local mason_tool_installer = require("mason-tool-installer")

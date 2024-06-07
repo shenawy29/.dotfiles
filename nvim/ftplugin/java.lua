@@ -1,7 +1,9 @@
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
+local HOME = vim.fn.expand("$HOME")
+
 local config = {
-	cmd = { "/home/shenawy/.local/share/nvim/mason/packages/jdtls/jdtls" },
+	cmd = { HOME .. "/.local/share/nvim/mason/packages/jdtls/jdtls" },
 	root_dir = vim.fs.dirname(vim.fs.find({ "gradlew", ".git", "mvnw" }, { upward = true })[1]),
 	capabilities = capabilities,
 }

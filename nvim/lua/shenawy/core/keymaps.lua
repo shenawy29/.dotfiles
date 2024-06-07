@@ -1,9 +1,36 @@
 local map = vim.keymap.set
 
+vim.api.nvim_create_user_command("Z", function(opts)
+	local query = opts.fargs[1]
+
+	local ok, directory = pcall(vim.fn.system, "zoxide query " .. query)
+
+	if ok == false then
+		print("Couldn't find this directory.")
+		return
+	end
+
+	local path = string.gsub(directory, "\n", "")
+
+	vim.cmd("cd " .. path)
+	vim.cmd.edit(path)
+end, { nargs = 1 })
+
+local highlight_group = vim.api.nvim_create_augroup("YankHighlight", {
+	clear = true,
+})
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+	callback = function()
+		vim.highlight.on_yank()
+	end,
+	group = highlight_group,
+	pattern = "*",
+})
+
 map("n", "<leader>sv", "<C-w>v")
 map("n", "<leader>sh", "<C-w>s")
 map("n", "<leader>se", "<C-w>=")
-map("n", "<leader>sx", "<cmd>close<CR>")
 
 map("x", "@", function()
 	return ":norm @" .. vim.fn.getcharstr() .. "<cr>"
@@ -61,13 +88,3 @@ vim.keymap.del("s", "H")
 map("n", "<leader>q", "<C-^>")
 
 map("n", "<leader>c", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-
-local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
-
-vim.api.nvim_create_autocmd("TextYankPost", {
-	callback = function()
-		vim.highlight.on_yank()
-	end,
-	group = highlight_group,
-	pattern = "*",
-})

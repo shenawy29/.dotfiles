@@ -6,7 +6,7 @@ local config = wezterm.config_builder()
 
 config.color_scheme = "Kanagawa (Gogh)"
 
--- config.enable_wayland = false
+config.enable_wayland = false
 
 config.enable_tab_bar = false
 
@@ -52,13 +52,13 @@ config.front_end = "WebGpu"
 
 config.font = wezterm.font("JetBrains Mono")
 
-config.cursor_blink_rate = 500
+-- config.cursor_blink_rate = 500
 
-config.cursor_blink_ease_in = "Constant"
+-- config.cursor_blink_ease_in = "Constant"
 
-config.cursor_blink_ease_out = "Constant"
+-- config.cursor_blink_ease_out = "Constant"
 
-config.default_cursor_style = "BlinkingBlock"
+-- config.default_cursor_style = "BlinkingBlock"
 
 config.warn_about_missing_glyphs = false
 

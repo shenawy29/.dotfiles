@@ -32,6 +32,7 @@ return {
 			ocaml = { "ocamlformat" },
 			cmake = { "cmakelang" },
 			asm = { "asmfmt" },
+			php = { "pretty-php" },
 		},
 		format_on_save = { timeout_ms = 500, lsp_fallback = true },
 	},
