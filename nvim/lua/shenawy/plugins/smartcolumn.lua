@@ -6,7 +6,6 @@ return {
 		disabled_filetypes = {
 			"startup",
 			"lazy",
-			"mason",
 			"markdown",
 			"help",
 			"netrw",

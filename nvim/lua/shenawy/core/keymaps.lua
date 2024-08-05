@@ -1,31 +1,31 @@
 local map = vim.keymap.set
 
 vim.api.nvim_create_user_command("Z", function(opts)
-	local query = opts.fargs[1]
+    local query = opts.fargs[1]
 
-	local ok, directory = pcall(vim.fn.system, "zoxide query " .. query)
+    local ok, directory = pcall(vim.fn.system, "zoxide query " .. query)
 
-	if ok == false then
-		print("Couldn't find this directory.")
-		return
-	end
+    if ok == false then
+        print("Couldn't find this directory.")
+        return
+    end
 
-	local path = string.gsub(directory, "\n", "")
+    local path = string.gsub(directory, "\n", "")
 
-	vim.cmd("cd " .. path)
-	vim.cmd.edit(path)
+    vim.cmd("cd " .. path)
+    vim.cmd.edit(path)
 end, { nargs = 1 })
 
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", {
-	clear = true,
+    clear = true,
 })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
-	callback = function()
-		vim.highlight.on_yank()
-	end,
-	group = highlight_group,
-	pattern = "*",
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+    group = highlight_group,
+    pattern = "*",
 })
 
 map("n", "<leader>sv", "<C-w>v")
@@ -33,7 +33,7 @@ map("n", "<leader>sh", "<C-w>s")
 map("n", "<leader>se", "<C-w>=")
 
 map("x", "@", function()
-	return ":norm @" .. vim.fn.getcharstr() .. "<cr>"
+    return ":norm @" .. vim.fn.getcharstr() .. "<cr>"
 end, { expr = true })
 
 map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
@@ -57,26 +57,24 @@ map("n", "<leader>j", "<cmd>cnext<CR>zz")
 map("n", "<leader>h", "<cmd>cfirst<CR>zz")
 map("n", "<leader>l", "<cmd>clast<CR>zz")
 
-map("n", "<ESC>", ":<bs>")
-
 map("n", "<leader>w", function()
-	local qf_exists = false
-	for _, win in pairs(vim.fn.getwininfo()) do
-		if win["quickfix"] == 1 then
-			qf_exists = true
-		end
-	end
-	if qf_exists == true then
-		vim.cmd("cclose")
-		return
-	end
-	if not vim.tbl_isempty(vim.fn.getqflist()) then
-		vim.cmd("copen")
-	end
+    local qf_exists = false
+    for _, win in pairs(vim.fn.getwininfo()) do
+        if win["quickfix"] == 1 then
+            qf_exists = true
+        end
+    end
+    if qf_exists == true then
+        vim.cmd("cclose")
+        return
+    end
+    if not vim.tbl_isempty(vim.fn.getqflist()) then
+        vim.cmd("copen")
+    end
 end)
 
 map({ "n", "v", "o" }, "<leader>z", function()
-	vim.cmd("normal %")
+    vim.cmd("normal %")
 end)
 
 map({ "n", "v", "o" }, "H", "^")
