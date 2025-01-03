@@ -21,9 +21,11 @@ in
     plugins = with pkgs; [
       tmuxPlugins.vim-tmux-navigator
       tmuxPlugins.yank
+      tmuxPlugins.cpu
+      tmuxPlugins.battery
+      tmuxPlugins.catppuccin
       kanagawa
     ];
-
     extraConfig = ''
       set-option -ga terminal-overrides ",xterm-256color:Tc"
       set-option -g status-position bottom
@@ -62,6 +64,32 @@ in
 
       bind -T copy-mode-vi H send-keys -X start-of-line
       bind -T copy-mode-vi L send-keys -X end-of-line
+
+      # set -g @catppuccin_flavor 'mocha'
+
+      # Configure the catppuccin plugin
+      set -g @catppuccin_flavor "mocha"
+      set -g @catppuccin_window_status_style "rounded"
+
+      # Load catppuccin
+      # run '${pkgs.tmuxPlugins.catppuccin}/share/tmux-plugins/catppuccin/catppuccin.tmux'
+
+      # Make the status line pretty and add some modules
+      # set -g status-right-length 100
+      # set -g status-left-length 100
+      # set -g status-left ""
+      # set -g status-right "#{E:@catppuccin_status_application}"
+      # set -agF status-right "#{E:@catppuccin_status_cpu}"
+      # set -ag status-right "#{E:@catppuccin_status_session}"
+      # set -ag status-right "#{E:@catppuccin_status_uptime}"
+      # set -agF status-right "#{E:@catppuccin_status_battery}"
+
+      # run-shell '${pkgs.tmuxPlugins.cpu}/share/tmux-plugins/cpu/cpu.tmux'
+      # run '${pkgs.tmuxPlugins.battery}/share/tmux-plugins/battery/battery.tmux'
+
+      # run '${pkgs.tmuxPlugins.catppuccin}/share/tmux-plugins/catppuccin/catppuccin.tmux'
+      # run-shell '${pkgs.tmuxPlugins.catppuccin}/share/tmux-plugins/catppuccin/catppuccin.tmux'
+
 
       set -g @kanagawa-plugins  " "
       set -g @kanagawa-show-powerline true

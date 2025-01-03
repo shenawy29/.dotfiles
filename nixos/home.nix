@@ -6,22 +6,21 @@
 }:
 
 {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
   home.username = "shenawy";
   home.homeDirectory = "/home/shenawy";
 
   home.stateVersion = "24.05"; # Please read the comment before changing.
-  home.sessionPath = [ "/usr/local/bin" ];
-  home.packages = [
-    # pkgs.hello
-    pkgs.opam
+  home.sessionPath = [
+    "/usr/local/bin"
+    "/home/shenawy/.local/bin/"
+    "/home/shenawy/.cargo/bin/"
+    "/home/shenawy/go/bin/"
   ];
 
   gtk = {
     enable = true;
-    # theme.package = pkgs.kanagawa-gtk-theme;
-    # theme.name = "Kanagawa-BL-LB";
+    theme.package = pkgs.kanagawa-gtk-theme;
+    theme.name = "Kanagawa-BL";
     iconTheme = {
       package = pkgs.tela-icon-theme;
       name = "Tela-black";
@@ -33,14 +32,22 @@
     };
   };
 
-  # services.hyprpaper = {
-  #   enable = true;
-  #   settings = {
-  #     preload = "~/Pictures/Background.png";
-  #     wallpaper = "HDMI-A-1, ~/Pictures/Background.png";
-  #     splash = false;
-  #   };
-  # };
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+  };
+
+  xdg.portal.xdgOpenUsePortal = true;
+
+  services.hyprpaper = {
+    enable = true;
+    settings = {
+      preload = "/etc/nixos/Background.png";
+      wallpaper = "HDMI-A-1, /etc/nixos/Background.png";
+      splash = false;
+    };
+  };
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -49,7 +56,7 @@
     xwayland.enable = true;
     settings = {
       "$mainMod" = "ALT";
-      "$terminal" = "wezterm";
+      "$terminal" = "ghostty";
       "$fileManager" = "thunar";
       "$browser" = "google-chrome-stable";
       "$menu" = "wofi --show drun";
@@ -83,10 +90,6 @@
           passes = 1;
         };
 
-        drop_shadow = "yes";
-        shadow_range = 4;
-        shadow_render_power = 3;
-        # "col.shadow" = "rgba(1a1a1aee)";
       };
 
       monitor = ",preferred,auto,auto";
@@ -95,8 +98,6 @@
         gaps_in = 3;
         gaps_out = 13;
         border_size = 1;
-        # "col.active_border" = "rgba(e4d0a8ee) rgba(e4d0a8ee) 45deg";
-        # "col.inactive_border" = "rgba(595959aa)";
         layout = "dwindle";
         allow_tearing = false;
       };
@@ -182,10 +183,15 @@
 
       windowrulev2 = [
         "suppressevent maximize, class:.*"
-        "opacity 0.95, class: wezterm"
+        "opacity 0.95, class: ghostty"
+        # "opacity 0.95, class: wezterm"
         "opacity 0.95, class: kitty"
         "opacity 0.95, class: thunar"
-        "noblur, class:^(?!wezterm)$"
+        # "noblur, class:^(?!wezterm)$"
+        "noblur, class:^(?!ghostty)$"
+        "noblur, class: harmonia"
+        "noshadow, class: harmonia"
+        "noborder, class: harmonia"
       ];
 
       bindm = [
@@ -193,6 +199,8 @@
         "$mainMod, mouse:273, resizewindow"
       ];
     };
+
+    # exec-once=[workspace 1] ghostty -e tmux new -s projects -c ./projects 'source ~/.zshrc; ${pkgs.neovim}/bin/nvim; $SHELL'
 
     extraConfig = ''
       bind=ALT,R,submap,resize
@@ -205,7 +213,7 @@
       bind=,escape,submap,reset 
       submap=reset
 
-      exec-once=[workspace 1] ${pkgs.wezterm}/bin/wezterm -e tmux new -s projects -c ./projects 'source ~/.zshrc; ${pkgs.neovim}/bin/nvim; $SHELL'
+      exec-once=[workspace 1] ghostty -e tmux new -s projects -c ./projects 'nvim; zsh;'
       exec-once=${pkgs.waybar}/bin/waybar
       exec-once=${pkgs.hyprpaper}/bin/hyprpaper
     '';
@@ -244,6 +252,7 @@
   #
   home.sessionVariables = {
     EDITOR = "nvim";
+    GTK_THEME = "Kanagawa-BL";
   };
 
   # Let Home Manager install and manage itself.
@@ -255,6 +264,9 @@
     package = pkgs.opam;
   };
 
+  programs.hyprlock = {
+    enable = true;
+  };
   programs.gh = {
     enable = true;
     settings = {
@@ -266,181 +278,232 @@
 
   programs.waybar = {
     enable = true;
-    style = lib.mkForce ''
+    style = ''
+      @define-color rosewater #f5e0dc;
+      @define-color flamingo #f2cdcd;
+      @define-color pink #f5c2e7;
+      @define-color mauve #957fb8;
+      @define-color red #e82424;
+      @define-color maroon #d27e99;
+      @define-color peach #ffa066;
+      @define-color yellow #e6c384;
+      @define-color green #98bb6c;
+      @define-color teal #94e2d5;
+      @define-color sky #7e9cd8;
+      @define-color sapphire #7fb4ca;
+      @define-color blue #9cabca;
+      @define-color lavender #938aa9;
+      @define-color text #dcd7ba;
+      @define-color subtext1 #bac2de;
+      @define-color subtext0 #a6adc8;
+      @define-color overlay2 #9399b2;
+      @define-color overlay1 #7f849c;
+      @define-color overlay0 #6c7086;
+      @define-color surface2 #585b70;
+      @define-color surface1 #45475a;
+      @define-color surface0 #2a2a37;
+      @define-color base #1e1e2e;
+      @define-color mantle #181825;
+      @define-color crust #11111b;
+
       * {
-        min-height: 0;
+        font-family: "JetBrainsMono Nerd Font";
+        font-size: 15px;
         margin: 0;
+        min-height: 0;
       }
 
       #waybar {
-        background: rgba(0, 0, 0, 0);
-        background: #161620;
-        font-size: 13px;
-        font-family: "JetBrainsMono Nerd Font";
-        /* color: #eeeeef; */
+        background: transparent;
+        color: @text;
+      }
+
+      #workspaces {
+        border-radius: 1rem;
+        background-color: @surface0;
+        margin-left: 1rem;
       }
 
       #workspaces button {
-        padding-left: 10px;
-        padding-right: 15px;
-        color: #c8caf5;
+        color: @lavender;
+        border-radius: 1rem;
       }
 
       #workspaces button.active {
-        color: #e6c384;
+        color: @sky;
+        border-radius: 1rem;
       }
 
-      #custom-powermenu,
-      #cpu,
-      #temperature,
-      #memory,
-      #workspaces,
+      #workspaces button:hover {
+        color: @sapphire;
+        border-radius: 1rem;
+      }
+
+
+      #custom-music,
+      #tray,
+      #backlight,
       #clock,
-      #window,
+      #battery,
       #pulseaudio,
-      #custom-updates {
-        padding: 0px 8px;
-        background-color: rgba(0, 0, 0, 0);
-      }
-
-      #window {
-        color: #c8caf5;
-      }
-
-      #custom-updates {
-        color: #1788e4;
-      }
-
-      #custom-powermenu {
-        color: #e82424;
-        padding-right: 11px;
-        margin-right: 8px;
-      }
-
-      #scratchpad {
-        color: #cffafe;
-        padding-right: 4px;
-        padding-left: 4px;
-      }
-
-      #pulseaudio {
-        color: #98bb6c;
-        padding-right: 14px;
-      }
-
-      #cpu {
-        color: #7e9cd8;
-      }
-
-      #temperature {
-        color: #98c379;
-      }
-
-      #memory {
-        color: #ffa066;
-      }
-
-      #network {
-        color: #c678dd;
-        min-width: 200px;
+      #custom-lock,
+      #language,
+      #custom-power {
+        background-color: @surface0;
+        padding: 0.5rem 0.8rem;
+        margin: 0px 0px;
       }
 
       #clock {
-        color: #c8caf5;
+        color: @blue;
+        border-radius: 0px 1rem 1rem 0px;
+        margin-right: 2rem;
       }
 
-      #memory:hover {
-        background-color: rgba(255, 160, 102, 0.12);
+      #custom-lock {
+        color: @green;
       }
 
-      #custom-powermenu:hover {
-        background-color: rgba(232, 36, 36, 0.12);
+      #battery {
+        color: @green;
       }
 
-      #pulseaudio:hover {
-        background-color: rgba(152, 187, 108, 0.12);
+      #battery.charging {
+        color: @green;
       }
 
-      #cpu:hover {
-        background-color: rgba(126, 156, 216, 0.12);
+      #battery.warning:not(.charging) {
+        color: @red;
       }
 
-      #memory,
-      #pulseaudio,
-      #custom-powermenu,
-      #cpu {
-        transition: 0.10s;
-        border-radius: 4px;
+      #backlight {
+        color: @yellow;
+      }
+
+      #backlight,
+      #battery {
+        border-radius: 0;
+      }
+
+      #pulseaudio {
+        color: @maroon;
+        border-radius: 1rem 0px 0px 1rem;
+        margin-left: 0px;
+      }
+
+      #custom-music {
+        color: @mauve;
+        border-radius: 1rem;
+      }
+
+      #language {
+        border-radius: 1rem 0px 0px 1rem;
+        color: @peach;
+      }
+
+      #custom-power {
+        color: @red;
+        margin-right: 1rem;
+        border-radius: 0px 1rem 1rem 0px;
+        padding-right: 1.5rem;
+        padding-left: 1.5rem;
+      }
+
+      #tray {
+        margin-right: 2rem;
+        border-radius: 1rem;
+      }
+
+      #workspaces button.urgent {
+        color: @red;
       }
     '';
 
     settings = {
       mainBar = {
-        layer = "top";
-        position = "bottom";
-        modules-left = [
+
+        "layer" = "top";
+        "position" = "bottom";
+        "modules-left" = [
           "hyprland/workspaces"
-          "custom/updates"
-          "tray"
         ];
-        modules-center = [ "hyprland/window" ];
-        modules-right = [
-          "clock"
-          "cpu"
-          "memory"
+        "modules-center" = [
+          "custom/music"
+        ];
+        "modules-right" = [
           "pulseaudio"
-          "custom/powermenu"
+          "clock"
+          "tray"
+          "hyprland/language"
+          "custom/lock"
+          "custom/power"
         ];
         "hyprland/workspaces" = {
-          format = "{icon}";
-          format-icons = {
+          "on-click" = "activate";
+          "on-scroll-up" = "hyprctl dispatch workspace e-1";
+          "on-scroll-down" = "hyprctl dispatch workspace e+1";
+          "format" = "{icon}";
+          "all-outputs" = true;
+          "format-icons" = {
             "1" = "";
             "2" = "";
             "3" = "";
-            "-99" = "";
-            "default" = "";
+            "default" = "";
           };
         };
-        memory = {
-          "format" = " {}%";
-          "tooltip" = "false";
+        "tray" = {
+          "icon-size" = 21;
+          "spacing" = 10;
         };
-        cpu = {
-          "format" = " {usage}%";
-          "tooltip" = "false";
+        "custom/music" = {
+          "format" = "  {}";
+          "escape" = true;
+          "interval" = 5;
+          "tooltip" = false;
+          "exec" = "playerctl metadata --format='{{ title }}'";
+          "on-click" = "playerctl play-pause";
+          "max-length" = 50;
         };
-        "custom/powermenu" = {
-          format = "";
-          tooltip = false;
-          on-click = "exec shutdown -h now";
+        "clock" = {
+          "timezone" = "Egypt";
+          "tooltip-format" = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+          "format-alt" = " {:%d/%m/%Y}";
+          "format" = " {:%H:%M}";
         };
-        clock = {
-          # format = "{ =%d %B %Y, %A, %I =%M %p}";
-          format = "{:%Y-%m-%d, %I:%M %p}";
-          interval = 60;
-          tooltip = false;
-        };
-        pulseaudio = {
-          format = "{icon} {volume}%";
-          format-bluetooth = "{volume}% {icon}";
-          format-muted = "";
-          format-icons = {
-            headphone = "";
-            hands-free = "";
-            headset = "";
-            phone = "";
-            portable = "";
-            car = "";
-            default = [
+        "pulseaudio" = {
+          # "scroll-step"= 1; // %; can be a float
+          "format" = "{icon} {volume}%";
+          "format-muted" = "";
+          "format-icons" = {
+            "default" = [
+              ""
               ""
-              ""
+              " "
             ];
           };
-          scroll-step = 1;
-          on-click = "pavucontrol";
+          "on-click" = "pavucontrol";
+        };
+        "custom/lock" = {
+          "tooltip" = false;
+          "on-click" = "hyprlock &";
+          "format" = "";
+        };
+        "custom/power" = {
+          "tooltip" = false;
+          "on-click" = "shutdown -h now";
+          "format" = "⏻";
+        };
+        "hyprland/language" = {
+          "format" = " {}";
+          "format-en" = "en";
+          "format-ar" = "ar";
+          "interval" = 1;
+          "keyboard-name" = "u";
+          "on-click" = "hyprctl switchxkblayout u next";
         };
       };
     };
+
   };
 
   programs.eza = {
@@ -452,10 +515,16 @@
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
+    tmux.enableShellIntegration = true;
   };
 
   programs.zsh = {
     plugins = [
+      {
+        name = "zsh-system-clipboard";
+        src = pkgs.zsh-system-clipboard;
+        file = "share/zsh/zsh-system-clipboard/zsh-system-clipboard.zsh";
+      }
       {
         name = "powerlevel10k";
         src = pkgs.zsh-powerlevel10k;
@@ -468,6 +537,11 @@
     syntaxHighlighting.enable = true;
     defaultKeymap = "viins";
     initExtra = ''
+      export MANPAGER='nvim +Man!'
+      export MANWIDTH='205'
+      export FZF_DEFAULT_OPTS='--bind=ctrl-k:up,ctrl-j:down'
+
+      setopt interactivecomments
       zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
       source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh;
       source ~/.p10k.zsh
@@ -476,12 +550,29 @@
       bindkey -s ^f "tmux-sessionizer\n"
       bindkey "^H" backward-delete-char
       bindkey "^?" backward-delete-char
+
+      bindkey -v
+
+      # Yank to the system clipboard
+      # This shit ain't working
+
+      # function vi-yank-xclip {
+      #     zle vi-yank
+      #     echo "$CUTBUFFER" | xclip -i
+      # }
+
+      # zle -N vi-yank-xclip
+      # bindkey -M vicmd 'y' vi-yank-xclip
+
+      eval "$(direnv hook zsh)"
     '';
     shellAliases = {
+      notes = "nvim /dev/null -c 'set filetype=markdown'";
       v = "nvim";
       cat = "bat";
       cd = "z";
-      switch = "sudo nixos-rebuild switch --flake /etc/nixos#default";
+      clean = "nh clean all";
+      switch = "nh os switch /etc/nixos";
       conf = "sudoedit /etc/nixos/configuration.nix";
       home = "sudoedit /etc/nixos/home.nix";
     };
@@ -489,6 +580,20 @@
 
   programs.bat = {
     enable = true;
+    themes = {
+      kanagawa = {
+        src = pkgs.fetchFromGitHub {
+          owner = "rebelot";
+          repo = "kanagawa.nvim";
+          rev = "e5f7b8a804360f0a48e40d0083a97193ee4fcc87";
+          sha256 = "sha256-FnwqqF/jtCgfmjIIR70xx8kL5oAqonrbDEGNw0sixoA=";
+        };
+        file = "extras/kanagawa.tmTheme";
+      };
+    };
+    config = {
+      theme = "kanagawa";
+    };
   };
 
   programs.zoxide = {
@@ -502,78 +607,83 @@
     enable = true;
     userName = "Mohamed Elshenawy";
     userEmail = "alshenawy10203022@gmail.com";
-    # extraConfig = {
-    #   credential.helper = "oauth";
-    # };
   };
 
-  # home.pointerCursor = {
-  #   gtk.enable = true;
-  #   x11.enable = true;
-  #   package = pkgs.capitaine-cursors;
-  #   name = "capitaine-cursors";
-  #   size = 24;
-  # };
+  home.pointerCursor = {
+    gtk.enable = true;
+    x11.enable = true;
+    package = pkgs.capitaine-cursors;
+    name = "capitaine-cursors";
+    size = 32;
+  };
 
-  programs.wezterm = {
+  programs.alacritty = {
     enable = true;
-    enableZshIntegration = true;
-    extraConfig = ''
-      local wezterm = require("wezterm")
-
-      local act = wezterm.action
-
-      local config = wezterm.config_builder()
-
-      config.color_scheme = "Kanagawa (Gogh)"
-
-      config.enable_wayland = false
-
-      config.enable_tab_bar = false
-
-      config.window_padding = {
-          left = 5,
-          right = 5,
-          top = 5,
-          bottom = 5,
-      }
-
-      config.window_close_confirmation = "NeverPrompt"
-
-      local copy_mode = nil
-
-      if wezterm.gui then
-          copy_mode = wezterm.gui.default_key_tables().copy_mode
-          table.insert(copy_mode, {
-              key = "L",
-              mods = "SHIFT",
-              action = act.CopyMode("MoveToEndOfLineContent"),
-          })
-
-          table.insert(copy_mode, {
-              key = "H",
-              mods = "SHIFT",
-              action = act.CopyMode("MoveToStartOfLineContent"),
-          })
-      end
-
-      config.key_tables = {
-          copy_mode = copy_mode,
-      }
-
-      config.force_reverse_video_cursor = true
-
-      config.cell_width = 0.85
-
-      config.front_end = "WebGpu"
-
-      config.font = wezterm.font("JetBrains Mono")
-
-      config.warn_about_missing_glyphs = false
-
-      config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
-
-      return config
-    '';
   };
+  # programs.wezterm = {
+  #   enable = true;
+  #   enableZshIntegration = true;
+  #   extraConfig = ''
+  #     local wezterm = require("wezterm")
+  #
+  #     local act = wezterm.action
+  #
+  #     local config = wezterm.config_builder()
+  #
+  #     config.color_scheme = "Kanagawa (Gogh)"
+  #
+  #     config.enable_wayland = false
+  #
+  #     config.enable_tab_bar = false
+  #
+  #     config.window_padding = {
+  #         left = 5,
+  #         right = 5,
+  #         top = 5,
+  #         bottom = 5,
+  #     }
+  #
+  #     config.audible_bell = "Disabled"
+  #
+  #     config.window_close_confirmation = "NeverPrompt"
+  #
+  #     local copy_mode = nil
+  #
+  #     if wezterm.gui then
+  #         copy_mode = wezterm.gui.default_key_tables().copy_mode
+  #         table.insert(copy_mode, {
+  #             key = "L",
+  #             mods = "SHIFT",
+  #             action = act.CopyMode("MoveToEndOfLineContent"),
+  #         })
+  #
+  #         table.insert(copy_mode, {
+  #             key = "H",
+  #             mods = "SHIFT",
+  #             action = act.CopyMode("MoveToStartOfLineContent"),
+  #         })
+  #     end
+  #
+  #     config.key_tables = {
+  #         copy_mode = copy_mode,
+  #     }
+  #
+  #     config.force_reverse_video_cursor = true
+  #
+  #     config.cursor_blink_rate = 0
+  #
+  #     config.cell_width = 0.85
+  #
+  #     config.front_end = "WebGpu"
+  #
+  #     config.font = wezterm.font("JetBrains Mono")
+  #
+  #     config.warn_about_missing_glyphs = false
+  #
+  #     config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
+  #
+  #     return config
+  #   '';
+  # };
+  programs.kitty.enable = true;
 }

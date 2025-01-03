@@ -1,32 +1,18 @@
 vim.cmd([[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]])
 vim.cmd([[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
 
-local border = {
-    { "╭", "FloatBorder" },
-    { "─", "FloatBorder" },
-    { "╮", "FloatBorder" },
-    { "│", "FloatBorder" },
-    { "╯", "FloatBorder" },
-    { "─", "FloatBorder" },
-    { "╰", "FloatBorder" },
-    { "│", "FloatBorder" },
-}
-
-local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-
-function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-    opts = opts or {}
-    opts.border = opts.border or border
-    return orig_util_open_floating_preview(contents, syntax, opts, ...)
-end
-
 vim.opt.guicursor = ""
 
 vim.filetype.add({
-    extension = {
-        templ = "templ",
-    },
+	extension = {
+		templ = "templ",
+	},
 })
+
+vim.g.loaded_matchparen = true
+vim.g.loaded_matchbracket = true
+
+-- vim.opt.matchparen = true
 
 vim.opt.showmode = false
 vim.opt.nu = true
@@ -63,19 +49,23 @@ vim.opt.updatetime = 50
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-vim.opt.foldlevel = 99
-vim.opt.foldlevelstart = 99
-vim.opt.foldenable = false
+-- vim.opt.foldmethod = "syntax"
+-- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+
+-- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
+-- vim.opt.foldlevel = 99
+-- vim.opt.foldlevelstart = 99
+-- vim.opt.foldenable = true
 
 vim.opt.cursorline = true
-
 vim.opt.cursorlineopt = "number"
-
 vim.opt.backspace = "indent,eol,start"
-
 vim.opt.clipboard:append("unnamedplus")
-
 vim.opt.splitright = true
 vim.opt.splitbelow = true
+
+-- vim.opt.foldtext = "v:lua.MyFoldtext()"
+
+-- vim.wo.foldmethod = 'expr'
+-- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'

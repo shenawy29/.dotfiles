@@ -5,9 +5,22 @@ return {
 		{ "-", "<cmd>Oil<cr>" },
 	},
 	config = function()
+		local detail = false
 		require("oil").setup({
 			use_default_keymaps = false,
 			keymaps = {
+				["gd"] = {
+					desc = "Toggle file detail view",
+					callback = function()
+						detail = not detail
+						if detail then
+							require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
+						else
+							require("oil").set_columns({ "icon" })
+						end
+					end,
+				},
+
 				["g?"] = "actions.show_help",
 				["<Tab>"] = "actions.select",
 				["<CR>"] = "actions.select",

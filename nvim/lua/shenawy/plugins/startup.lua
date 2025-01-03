@@ -38,9 +38,10 @@ return {
 				align = "center",
 				title = "Basic Commands",
 				content = {
-					{ " File Browser", "Oil", "-" },
-					{ " Find File", "Telescope find_files", "<leader>ff" },
-					{ " New File", "lua require'startup'.new_file()", "<leader>nf" },
+					{ "  File Browser", "Oil", "-" },
+					{ "  Find File", "lua require'fzf-lua'.files()", "<leader>ff" },
+					{ "  Find Word", "lua require'fzf-lua'.live_grep()", "<leader>fs" },
+					{ "  Recent Files", "lua require'fzf-lua'.oldfiles()", "<leader>fo" },
 				},
 				highlight = "String",
 			},

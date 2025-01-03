@@ -1,1 +1,8 @@
-return { "mfussenegger/nvim-jdtls", lazy = true, event = "LspAttach" }
+-- return {
+-- 	"mfussenegger/nvim-jdtls",
+-- 	lazy = true,
+-- 	ft = { "java" },
+-- 	-- event = "LspAttach",
+-- }
+
+return {}

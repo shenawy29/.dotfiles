@@ -4,11 +4,13 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    stylix.url = "github:danth/stylix";
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -16,18 +18,24 @@
     {
       self,
       nixpkgs,
-      stylix,
+      ghostty,
       ...
     }@inputs:
     {
-      nixosConfigurations.default = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs;
         };
 
         modules = [
-          inputs.stylix.nixosModules.stylix
           ./configuration.nix
+          inputs.home-manager.nixosModules.home-manager
+
+          {
+            environment.systemPackages = [
+              ghostty.packages.x86_64-linux.default
+            ];
+          }
         ];
       };
     };
