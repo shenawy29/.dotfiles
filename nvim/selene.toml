@@ -1,0 +1,12 @@
+
+# ~/.config/nvim/selene.toml
+
+# Tells Selene to recognize Neovim global variables like `vim`
+std = "neovim"
+
+[rules]
+# Optional: Customize or loosen strict rules common in Neovim configs
+global_usage = "allow"
+mixed_table = "allow"
+multiple_statements = "allow"
+if_same_then_else = "allow"
