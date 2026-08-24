@@ -214,11 +214,473 @@ in
 
   services = {
     mpris-proxy.enable = true;
+    wayle = {
+      enable = true;
+      autoInstallDependencies = true;
 
-    # ollama = {
-    #   enable = true;
-    #   acceleration = "rocm";
-    # };
+      settings = {
+        bar = {
+          layout = [
+            {
+              monitor = "*";
+              left = [
+                "dashboard"
+                "hyprland-workspaces"
+              ];
+              center = [ "clock" ];
+              right = [
+                "cpu"
+                "ram"
+                "keyboard-input"
+                "idle-inhibit"
+                "brightness"
+                "microphone"
+                "volume"
+                "network"
+                "bluetooth"
+                "battery"
+                "notifications"
+                "systray"
+                "power"
+              ];
+            }
+          ];
+        };
+
+        osd = {
+          enabled = true;
+          position = "bottom"; # top-left|top|top-right|right|bottom-right|bottom|bottom-left|left
+          duration = 2500;
+          monitor = "primary"; # or a connector name e.g. "eDP-1"
+          margin = 150;
+          border = true;
+          layer = "overlay"; # background|bottom|top|overlay
+        };
+
+        modules = {
+
+          hyprland-workspaces = {
+            min-workspace-count = 5;
+            monitor-specific = true;
+            show-special = true;
+            urgent-show = true;
+            urgent-mode = "workspace"; # workspace|application
+            display-mode = "label"; # label|icon|none
+            label-use-name = false;
+            numbering = "absolute"; # absolute|relative
+            divider = " ";
+            app-icons-show = false;
+            app-icons-dedupe = true;
+            app-icons-fallback = "ld-app-window-symbolic";
+            app-icons-empty = "tb-minus-symbolic";
+            icon-gap = 0.3;
+            workspace-padding = 0.5;
+            icon-size = 1.0;
+            label-size = 1.0;
+            workspace-ignore = [ ];
+            active-indicator = "background"; # background|underline
+            active-color = "accent";
+            occupied-color = "fg-muted";
+            empty-color = "fg-subtle";
+            container-bg-color = "bg-surface-elevated";
+            border-show = false;
+            border-color = "border-default";
+            workspace-map = { };
+            app-icon-map = { };
+          };
+
+          notifications = {
+            icon-name = "ld-bell-symbolic";
+            icon-unread = "ld-bell-dot-symbolic";
+            icon-dnd = "ld-bell-off-symbolic";
+            border-show = false;
+            border-color = "green";
+            icon-show = true;
+            icon-color = "auto";
+            icon-bg-color = "green";
+            label-show = true;
+            label-color = "green";
+            label-max-length = 0;
+            button-bg-color = "bg-surface-elevated";
+            left-click = "dropdown:notification";
+            right-click = "wayle notify dnd";
+            middle-click = "";
+            scroll-up = "";
+            scroll-down = "";
+            blocklist = [ ];
+            icon-source = "automatic"; # automatic|mapped|application
+            popup-position = "top-right";
+            popup-max-visible = 5;
+            popup-stacking-order = "newest-first";
+            popup-duration = 5000;
+            popup-hover-pause = true;
+            popup-margin-x = 0;
+            popup-margin-y = 0;
+            popup-gap = 8;
+            popup-monitor = "primary";
+            popup-layer = "overlay";
+            popup-close-behavior = "dismiss"; # dismiss|remove
+            popup-shadow = true;
+            popup-urgency-bar = "low"; # low|normal|critical|none
+            thresholds = [
+              {
+                above = 5;
+                icon-color = "status-warning";
+                label-color = "status-warning";
+              }
+              {
+                above = 20;
+                icon-color = "status-error";
+                label-color = "status-error";
+              }
+            ];
+          };
+
+          battery = {
+            level-icons = [
+              "md-battery_android_0-symbolic"
+              "md-battery_android_frame_1-symbolic"
+              "md-battery_android_frame_2-symbolic"
+              "md-battery_android_frame_3-symbolic"
+              "md-battery_android_frame_4-symbolic"
+              "md-battery_android_frame_5-symbolic"
+              "md-battery_android_frame_6-symbolic"
+              "md-battery_android_frame_full-symbolic"
+            ];
+            charging-icon = "md-battery_android_frame_bolt-symbolic";
+            alert-icon = "md-battery_android_alert-symbolic";
+            border-show = false;
+            border-color = "yellow";
+            icon-show = true;
+            icon-color = "auto";
+            icon-bg-color = "yellow";
+            label-show = true;
+            label-color = "yellow";
+            format = "{{ percent }}%";
+            label-max-length = 0;
+            button-bg-color = "bg-surface-elevated";
+            left-click = "dropdown:battery";
+            right-click = "";
+            middle-click = "";
+            scroll-up = "";
+            scroll-down = "";
+            thresholds = [
+              {
+                below = 40;
+                icon-color = "status-warning";
+              }
+              {
+                below = 20;
+                icon-color = "status-error";
+                label-color = "status-error";
+              }
+            ];
+          };
+
+          brightness = {
+            level-icons = [
+              "ld-sun-dim-symbolic"
+              "ld-sun-medium-symbolic"
+              "ld-sun-symbolic"
+            ];
+            border-show = false;
+            border-color = "yellow";
+            icon-show = true;
+            icon-color = "auto";
+            icon-bg-color = "yellow";
+            label-show = true;
+            label-color = "yellow";
+            format = "{{ percent }}%";
+            label-max-length = 0;
+            button-bg-color = "bg-surface-elevated";
+            left-click = "dropdown:brightness";
+            right-click = "";
+            middle-click = "";
+            scroll-up = "";
+            scroll-down = "";
+            thresholds = [
+              {
+                below = 20;
+                icon-color = "status-warning";
+                label-color = "status-warning";
+              }
+            ];
+          };
+
+          bluetooth = {
+            disabled-icon = "ld-bluetooth-off-symbolic";
+            disconnected-icon = "ld-bluetooth-symbolic";
+            connected-icon = "ld-bluetooth-connected-symbolic";
+            searching-icon = "ld-bluetooth-searching-symbolic";
+            border-show = false;
+            border-color = "blue";
+            icon-show = true;
+            icon-color = "auto";
+            icon-bg-color = "blue";
+            label-show = true;
+            label-color = "blue";
+            label-max-length = 15;
+            button-bg-color = "bg-surface-elevated";
+            left-click = "dropdown:bluetooth";
+            right-click = "";
+            middle-click = "";
+            scroll-up = "";
+            scroll-down = "";
+          };
+
+          network = {
+            wifi-disabled-icon = "cm-wireless-disabled-symbolic";
+            wifi-acquiring-icon = "cm-wireless-acquiring-symbolic";
+            wifi-offline-icon = "cm-wireless-offline-symbolic";
+            wifi-connected-icon = "cm-wireless-connected-symbolic";
+            wifi-signal-icons = [
+              "cm-wireless-signal-weak-symbolic"
+              "cm-wireless-signal-ok-symbolic"
+              "cm-wireless-signal-good-symbolic"
+              "cm-wireless-signal-excellent-symbolic"
+            ];
+            wired-connected-icon = "cm-wired-symbolic";
+            wired-acquiring-icon = "cm-wired-acquiring-symbolic";
+            wired-disconnected-icon = "cm-wired-disconnected-symbolic";
+            border-show = false;
+            border-color = "accent";
+            icon-show = true;
+            icon-color = "auto";
+            icon-bg-color = "accent";
+            label-show = true;
+            label-color = "accent";
+            label-max-length = 15;
+            button-bg-color = "bg-surface-elevated";
+            left-click = "dropdown:network";
+            right-click = "";
+            middle-click = "";
+            scroll-up = "";
+            scroll-down = "";
+          };
+
+          volume = {
+            level-icons = [
+              "ld-volume-symbolic"
+              "ld-volume-1-symbolic"
+              "ld-volume-2-symbolic"
+            ];
+            icon-muted = "ld-volume-x-symbolic";
+            border-show = false;
+            border-color = "accent";
+            icon-show = true;
+            icon-color = "auto";
+            icon-bg-color = "accent";
+            label-show = true;
+            label-color = "accent";
+            format = "{{ percent }}%";
+            label-max-length = 0;
+            button-bg-color = "bg-surface-elevated";
+            left-click = "dropdown:audio";
+            right-click = "";
+            middle-click = "wayle audio output-mute";
+            scroll-up = "";
+            scroll-down = "";
+            dropdown-app-icons = "mapped"; # mapped|native
+            thresholds = [
+              {
+                above = 100;
+                icon-color = "status-warning";
+                label-color = "status-warning";
+              }
+              {
+                above = 130;
+                icon-color = "status-error";
+                label-color = "status-error";
+              }
+            ];
+          };
+
+          microphone = {
+            icon-active = "ld-mic-symbolic";
+            icon-muted = "ld-mic-off-symbolic";
+            border-show = false;
+            border-color = "green";
+            icon-show = true;
+            icon-color = "auto";
+            icon-bg-color = "green";
+            label-show = true;
+            label-color = "green";
+            label-max-length = 0;
+            button-bg-color = "bg-surface-elevated";
+            left-click = "dropdown:audio";
+            right-click = "";
+            middle-click = "wayle audio input-mute";
+            scroll-up = "";
+            scroll-down = "";
+            thresholds = [
+              {
+                above = 70;
+                icon-color = "status-warning";
+                label-color = "status-warning";
+              }
+              {
+                above = 90;
+                icon-color = "status-error";
+                label-color = "status-error";
+              }
+            ];
+          };
+
+          idle-inhibit = {
+            startup-duration = 60; # minutes, 0 = indefinite
+            icon-inactive = "tb-coffee-off-symbolic";
+            icon-active = "tb-coffee-symbolic";
+            format = "{{ state }}";
+            border-show = false;
+            border-color = "green";
+            icon-show = true;
+            icon-color = "auto";
+            icon-bg-color = "green";
+            label-show = true;
+            label-color = "green";
+            label-max-length = 0;
+            button-bg-color = "bg-surface-elevated";
+            left-click = "wayle idle toggle --indefinite";
+            right-click = "wayle idle toggle";
+            middle-click = "";
+            scroll-up = "";
+            scroll-down = "";
+          };
+
+          power = {
+            icon-name = "ld-power-symbolic";
+            border-show = false;
+            border-color = "red";
+            icon-color = "auto";
+            icon-bg-color = "red";
+            left-click = "";
+            right-click = "";
+            middle-click = "";
+            scroll-up = "";
+            scroll-down = "";
+          };
+
+          systray = {
+            icon-scale = 1.0;
+            item-gap = 0.25;
+            internal-padding = 0.5;
+            blacklist = [ ];
+            overrides = [ ];
+            border-show = false;
+            border-color = "border-accent";
+            button-bg-color = "bg-surface-elevated";
+          };
+
+          keyboard-input = {
+            format = "{{ alias }}";
+            icon-name = "ld-keyboard-symbolic";
+            border-show = false;
+            border-color = "yellow";
+            icon-show = true;
+            icon-color = "auto";
+            icon-bg-color = "yellow";
+            label-show = true;
+            label-color = "yellow";
+            label-max-length = 0;
+            button-bg-color = "bg-surface-elevated";
+            left-click = "";
+            right-click = "";
+            middle-click = "";
+            scroll-up = "";
+            scroll-down = "";
+            layout-alias-map = {
+              "English (US)" = "EN";
+            };
+          };
+
+          cpu = {
+            poll-interval-ms = 2000;
+            temp-sensor = "auto"; # or a sensors label like "Tctl"
+            format = "{{ percent }}%";
+            icon-name = "ld-cpu-symbolic";
+            border-show = false;
+            border-color = "blue";
+            icon-show = true;
+            icon-color = "auto";
+            icon-bg-color = "blue";
+            label-show = true;
+            label-color = "blue";
+            label-max-length = 0;
+            button-bg-color = "bg-surface-elevated";
+            left-click = "";
+            right-click = "";
+            middle-click = "";
+            scroll-up = "";
+            scroll-down = "";
+            thresholds = [
+              {
+                above = 70;
+                icon-color = "status-warning";
+                label-color = "status-warning";
+              }
+              {
+                above = 90;
+                icon-color = "status-error";
+                label-color = "status-error";
+              }
+            ];
+          };
+
+          ram = {
+            poll-interval-ms = 5000;
+            format = "{{ percent }}%";
+            icon-name = "ld-memory-stick-symbolic";
+            border-show = false;
+            border-color = "green";
+            icon-show = true;
+            icon-color = "auto";
+            icon-bg-color = "green";
+            label-show = true;
+            label-color = "green";
+            label-max-length = 0;
+            button-bg-color = "bg-surface-elevated";
+            left-click = "";
+            right-click = "";
+            middle-click = "";
+            scroll-up = "";
+            scroll-down = "";
+            thresholds = [
+              {
+                above = 80;
+                icon-color = "status-warning";
+                label-color = "status-warning";
+              }
+              {
+                above = 95;
+                icon-color = "status-error";
+                label-color = "status-error";
+              }
+            ];
+          };
+        };
+
+        styling = {
+          theme-provider = "wayle"; # static palette, not matugen/pywal/wallust
+
+          palette = {
+            # Kanagawa Wave
+            bg = "#1F1F28"; # sumiInk1
+            surface = "#2A2A37"; # sumiInk2
+            elevated = "#363646"; # sumiInk3
+
+            fg = "#DCD7BA"; # fujiWhite
+            fg-muted = "#727169"; # fujiGray
+
+            primary = "#7E9CD8"; # crystalBlue (accent)
+
+            red = "#C34043"; # autumnRed
+            yellow = "#E6C384"; # carpYellow
+            green = "#76946A"; # autumnGreen
+            blue = "#7E9CD8"; # crystalBlue
+          };
+        };
+      };
+    };
 
     hyprpaper = {
       enable = true;
@@ -975,343 +1437,343 @@ in
     };
   };
 
-  programs.waybar = {
-    enable = true;
-    systemd.enable = true;
-    settings = {
-      mainBar = {
-        "layer" = "top";
-        "position" = "bottom";
-        "modules-left" = [
-          "hyprland/workspaces"
-        ];
-        "modules-center" = [
-          "custom/music"
-        ];
-        "modules-right" = [
-          "pulseaudio"
-          # "bluetooth"
-          "clock"
-          "tray"
-          "hyprland/language"
-          "custom/lock"
-          "custom/power"
-          "custom/notification"
-        ];
-        "hyprland/workspaces" = {
-          "on-click" = "activate";
-          "on-scroll-up" = "hyprctl dispatch workspace e-1";
-          "on-scroll-down" = "hyprctl dispatch workspace e+1";
-          "format" = "{icon}";
-          "all-outputs" = true;
-          "format-icons" = {
-            "1" = "";
-            "2" = "";
-            "3" = "";
-            "default" = "";
-          };
-        };
-        "tray" = {
-          "icon-size" = 21;
-          "spacing" = 10;
-        };
-
-        "custom/music" = {
-          "format" = "  {}";
-          "escape" = true;
-          "interval" = 5;
-          "tooltip" = false;
-          "exec" = "playerctl metadata --format='{{ title }}'";
-          "on-click" = "playerctl play-pause";
-          "max-length" = 50;
-        };
-        "clock" = {
-          "timezone" = "Egypt";
-          "tooltip-format" = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-          "format-alt" = " {:%d/%m/%Y}";
-          "format" = " {:%I:%M %p}";
-        };
-        "pulseaudio" = {
-          "format" = "{icon} {volume}%";
-          "format-muted" = "";
-          "format-icons" = {
-            "default" = [
-              ""
-              ""
-              " "
-            ];
-          };
-          "on-click" = "pwvucontrol";
-        };
-        "custom/lock" = {
-          "tooltip" = false;
-          "on-click" = "hyprlock &";
-          "format" = "";
-        };
-        "custom/power" = {
-          "tooltip" = false;
-          "on-click" = "shutdown -h now";
-          "format" = "⏻";
-        };
-        "custom/notification" = {
-          tooltip = false;
-          format = "{} {icon}";
-          "format-icons" = {
-            notification = "󱅫";
-            none = "";
-            "dnd-notification" = " ";
-            "dnd-none" = "󰂛";
-            "inhibited-notification" = " ";
-            "inhibited-none" = "";
-            "dnd-inhibited-notification" = " ";
-            "dnd-inhibited-none" = " ";
-          };
-          "return-type" = "json";
-          "exec-if" = "which swaync-client";
-          exec = "swaync-client -swb";
-          "on-click" = "sleep 0.1 && swaync-client -t -sw";
-          "on-click-right" = "sleep 0.1 && swaync-client -d -sw";
-          escape = true;
-        };
-
-        "hyprland/language" = {
-          "format" = " {}";
-          "format-en" = "en";
-          "format-ar" = "ar";
-          "keyboard-name" = "usb-keyboard-usb-keyboard";
-          "on-click" = "hyprctl switchxkblayout usb-keyboard-usb-keyboard next";
-        };
-
-      };
-    };
-    style = ''
-      @define-color rosewater rgba(245, 224, 220, 1.0);
-      @define-color flamingo rgba(242, 205, 205, 1.0);
-      @define-color pink rgba(245, 194, 231, 1.0);
-      @define-color mauve rgba(149, 127, 184, 1.0);
-      @define-color red rgba(232, 36, 36, 1.0);
-      @define-color maroon rgba(210, 126, 153, 1.0);
-      @define-color peach rgba(255, 160, 102, 1.0);
-      @define-color yellow rgba(230, 195, 132, 1.0);
-      @define-color green rgba(152, 187, 108, 1.0);
-      @define-color teal rgba(148, 226, 213, 1.0);
-      @define-color sky rgba(126, 156, 216, 1.0);
-      @define-color sapphire rgba(127, 180, 202, 1.0);
-      @define-color blue rgba(156, 171, 202, 1.0);
-      @define-color blue_wave rgba(45, 79, 103, 1);
-      @define-color lavender rgba(147, 138, 169, 1.0);
-      @define-color text rgba(220, 215, 186, 1.0);
-      @define-color subtext1 rgba(186, 194, 222, 1.0);
-      @define-color subtext0 rgba(166, 173, 200, 1.0);
-      @define-color overlay2 rgba(147, 153, 178, 1.0);
-      @define-color overlay1 rgba(127, 132, 156, 1.0);
-      @define-color overlay0 rgba(108, 112, 134, 1.0);
-      @define-color surface2 rgba(88, 91, 112, 1.0);
-      @define-color surface1 rgba(69, 71, 90, 1.0);
-      @define-color surface0 rgba(42, 42, 55, 1.0);
-      @define-color base rgba(30, 30, 46, 1.0);
-      @define-color mantle rgba(24, 24, 37, 1.0);
-      @define-color crust rgba(17, 17, 27, 1.0);
-
-      @define-color rosewater_hover rgba(245, 224, 220, 0.40);
-      @define-color flamingo_hover rgba(242, 205, 205, 0.40);
-      @define-color pink_hover rgba(245, 194, 231, 0.40);
-      @define-color mauve_hover rgba(149, 127, 184, 0.40);
-      @define-color red_hover rgba(232, 36, 36, 0.40);
-      @define-color maroon_hover rgba(210, 126, 153, 0.40);
-      @define-color peach_hover rgba(255, 160, 102, 0.40);
-      @define-color yellow_hover rgba(230, 195, 132, 0.40);
-      @define-color green_hover rgba(152, 187, 108, 0.40);
-      @define-color teal_hover rgba(148, 226, 213, 0.40);
-      @define-color sky_hover rgba(126, 156, 216, 0.40);
-      @define-color sapphire_hover rgba(127, 180, 202, 0.40);
-      @define-color blue_hover rgba(156, 171, 202, 0.40);
-      @define-color blue_wave_hover rgba(45, 79, 103, 0.40);
-      @define-color lavender_hover rgba(147, 138, 169, 0.40);
-      @define-color text_hover rgba(220, 215, 186, 0.40);
-      @define-color subtext1_hover rgba(186, 194, 222, 0.40);
-      @define-color subtext0_hover rgba(166, 173, 200, 0.40);
-      @define-color overlay2_hover rgba(147, 153, 178, 0.40);
-      @define-color overlay1_hover rgba(127, 132, 156, 0.40);
-      @define-color overlay0_hover rgba(108, 112, 134, 0.40);
-      @define-color surface2_hover rgba(88, 91, 112, 0.40);
-      @define-color surface1_hover rgba(69, 71, 90, 0.40);
-      @define-color surface0_hover rgba(42, 42, 55, 0.40);
-      @define-color base_hover rgba(30, 30, 46, 0.40);
-      @define-color mantle_hover rgba(24, 24, 37, 0.40);
-      @define-color crust_hover rgba(17, 17, 27, 0.40);
-
-
-      * {
-        font-family: "FiraCode Nerd Font";
-        font-size: 15px;
-        margin: 0;
-        min-height: 0;
-      }
-
-      #waybar {
-        background: transparent;
-        color: @text;
-      }
-
-      #workspaces {
-        border-radius: 1rem;
-        background-color: @surface0;
-        margin-left: 1rem;
-      }
-
-      #workspaces button {
-        color: @lavender;
-        border-radius: 1rem;
-      }
-
-      #workspaces button.active {
-        color: @sky;
-        border-radius: 1rem;
-      }
-
-      #workspaces button:hover {
-        color: @sapphire;
-        border-radius: 1rem;
-      }
-
-      #custom-music,
-      #tray,
-      #backlight,
-      #clock,
-      #battery,
-      #pulseaudio,
-      #custom-lock,
-      #language,
-      #bluetooth,
-      #custom-power,
-      #custom-notification {
-        background-color: @surface0;
-        padding: 0.5rem 0.8rem;
-        margin: 0px 0px;
-      }
-
-      #clock:hover {
-        background-color: @blue_hover;
-        border-radius: 0px 1rem 1rem 0px;
-        margin-right: 1rem;
-      }
-
-      #clock {
-        transition: all 0.1s linear;
-        color: @blue;
-        border-radius: 0px 1rem 1rem 0px;
-        margin-right: 1rem;
-      }
-
-      #custom-lock:hover {
-        padding-right: 1.5rem;
-        padding-left: 1.5rem;
-        background-color: @green_hover;
-      }
-
-      #custom-lock {
-        padding-right: 1.5rem;
-        padding-left: 1.5rem;
-        transition: all 0.1s linear;
-        color: @green;
-      }
-
-      #battery {
-        color: @green;
-      }
-
-      #battery.charging {
-        color: @green;
-      }
-
-      #battery.warning:not(.charging) {
-        color: @red;
-      }
-
-      #bluetooth {
-        transition: all 0.1s linear;
-        color: @blue_wave;
-      }
-
-      #bluetooth:hover {
-        background-color: @blue_wave_hover;
-      }
-
-      #pulseaudio:hover {
-        background-color: @maroon_hover;
-        border-radius: 1rem 0px 0px 1rem;
-        margin-left: 0px;
-      }
-
-      #pulseaudio {
-        transition: all 0.1s linear;
-        color: @maroon;
-        border-radius: 1rem 0px 0px 1rem;
-        margin-left: 0px;
-      }
-
-      #custom-music {
-        color: @mauve;
-        border-radius: 1rem;
-      }
-
-      #language:hover {
-        background-color: @peach_hover;
-      }
-
-      #language {
-        transition: all 0.1s linear;
-        border-radius: 1rem 0px 0px 1rem;
-        color: @peach;
-      }
-
-      #custom-notification:hover {
-        background-color: rgba(45, 79, 103, 0.40);
-        margin-right: 1rem;
-        border-radius: 1rem;
-      }
-
-      #custom-notification {
-        transition: all 0.1s linear;
-        color: rgba(45, 79, 103, 1.0) ;
-        margin-right: 1rem;
-        border-radius: 1rem;
-      }
-
-      #custom-notification {
-        color: #2d4f67;
-        margin-right: 1rem;
-        border-radius: 1rem;
-      }
-
-      #custom-power:hover {
-        background-color: @red_hover;
-        margin-right: 1rem;
-        border-radius: 0px 1rem 1rem 0px;
-        padding-right: 1.5rem;
-        padding-left: 1.5rem;
-      }
-
-      #custom-power {
-        transition: all 0.1s linear;
-        color: @red;
-        margin-right: 1rem;
-        border-radius: 0px 1rem 1rem 0px;
-        padding-right: 1.5rem;
-        padding-left: 1.5rem;
-      }
-
-      #tray {
-        margin-right: 2rem;
-        border-radius: 1rem;
-      }
-
-      #workspaces button.urgent {
-        color: @red;
-      }
-    '';
-  };
+  # programs.waybar = {
+  #   enable = true;
+  #   systemd.enable = true;
+  #   settings = {
+  #     mainBar = {
+  #       "layer" = "top";
+  #       "position" = "bottom";
+  #       "modules-left" = [
+  #         "hyprland/workspaces"
+  #       ];
+  #       "modules-center" = [
+  #         "custom/music"
+  #       ];
+  #       "modules-right" = [
+  #         "pulseaudio"
+  #         # "bluetooth"
+  #         "clock"
+  #         "tray"
+  #         "hyprland/language"
+  #         "custom/lock"
+  #         "custom/power"
+  #         "custom/notification"
+  #       ];
+  #       "hyprland/workspaces" = {
+  #         "on-click" = "activate";
+  #         "on-scroll-up" = "hyprctl dispatch workspace e-1";
+  #         "on-scroll-down" = "hyprctl dispatch workspace e+1";
+  #         "format" = "{icon}";
+  #         "all-outputs" = true;
+  #         "format-icons" = {
+  #           "1" = "";
+  #           "2" = "";
+  #           "3" = "";
+  #           "default" = "";
+  #         };
+  #       };
+  #       "tray" = {
+  #         "icon-size" = 21;
+  #         "spacing" = 10;
+  #       };
+  #
+  #       "custom/music" = {
+  #         "format" = "  {}";
+  #         "escape" = true;
+  #         "interval" = 5;
+  #         "tooltip" = false;
+  #         "exec" = "playerctl metadata --format='{{ title }}'";
+  #         "on-click" = "playerctl play-pause";
+  #         "max-length" = 50;
+  #       };
+  #       "clock" = {
+  #         "timezone" = "Egypt";
+  #         "tooltip-format" = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+  #         "format-alt" = " {:%d/%m/%Y}";
+  #         "format" = " {:%I:%M %p}";
+  #       };
+  #       "pulseaudio" = {
+  #         "format" = "{icon} {volume}%";
+  #         "format-muted" = "";
+  #         "format-icons" = {
+  #           "default" = [
+  #             ""
+  #             ""
+  #             " "
+  #           ];
+  #         };
+  #         "on-click" = "pwvucontrol";
+  #       };
+  #       "custom/lock" = {
+  #         "tooltip" = false;
+  #         "on-click" = "hyprlock &";
+  #         "format" = "";
+  #       };
+  #       "custom/power" = {
+  #         "tooltip" = false;
+  #         "on-click" = "shutdown -h now";
+  #         "format" = "⏻";
+  #       };
+  #       "custom/notification" = {
+  #         tooltip = false;
+  #         format = "{} {icon}";
+  #         "format-icons" = {
+  #           notification = "󱅫";
+  #           none = "";
+  #           "dnd-notification" = " ";
+  #           "dnd-none" = "󰂛";
+  #           "inhibited-notification" = " ";
+  #           "inhibited-none" = "";
+  #           "dnd-inhibited-notification" = " ";
+  #           "dnd-inhibited-none" = " ";
+  #         };
+  #         "return-type" = "json";
+  #         "exec-if" = "which swaync-client";
+  #         exec = "swaync-client -swb";
+  #         "on-click" = "sleep 0.1 && swaync-client -t -sw";
+  #         "on-click-right" = "sleep 0.1 && swaync-client -d -sw";
+  #         escape = true;
+  #       };
+  #
+  #       "hyprland/language" = {
+  #         "format" = " {}";
+  #         "format-en" = "en";
+  #         "format-ar" = "ar";
+  #         "keyboard-name" = "usb-keyboard-usb-keyboard";
+  #         "on-click" = "hyprctl switchxkblayout usb-keyboard-usb-keyboard next";
+  #       };
+  #
+  #     };
+  #   };
+  #   style = ''
+  #     @define-color rosewater rgba(245, 224, 220, 1.0);
+  #     @define-color flamingo rgba(242, 205, 205, 1.0);
+  #     @define-color pink rgba(245, 194, 231, 1.0);
+  #     @define-color mauve rgba(149, 127, 184, 1.0);
+  #     @define-color red rgba(232, 36, 36, 1.0);
+  #     @define-color maroon rgba(210, 126, 153, 1.0);
+  #     @define-color peach rgba(255, 160, 102, 1.0);
+  #     @define-color yellow rgba(230, 195, 132, 1.0);
+  #     @define-color green rgba(152, 187, 108, 1.0);
+  #     @define-color teal rgba(148, 226, 213, 1.0);
+  #     @define-color sky rgba(126, 156, 216, 1.0);
+  #     @define-color sapphire rgba(127, 180, 202, 1.0);
+  #     @define-color blue rgba(156, 171, 202, 1.0);
+  #     @define-color blue_wave rgba(45, 79, 103, 1);
+  #     @define-color lavender rgba(147, 138, 169, 1.0);
+  #     @define-color text rgba(220, 215, 186, 1.0);
+  #     @define-color subtext1 rgba(186, 194, 222, 1.0);
+  #     @define-color subtext0 rgba(166, 173, 200, 1.0);
+  #     @define-color overlay2 rgba(147, 153, 178, 1.0);
+  #     @define-color overlay1 rgba(127, 132, 156, 1.0);
+  #     @define-color overlay0 rgba(108, 112, 134, 1.0);
+  #     @define-color surface2 rgba(88, 91, 112, 1.0);
+  #     @define-color surface1 rgba(69, 71, 90, 1.0);
+  #     @define-color surface0 rgba(42, 42, 55, 1.0);
+  #     @define-color base rgba(30, 30, 46, 1.0);
+  #     @define-color mantle rgba(24, 24, 37, 1.0);
+  #     @define-color crust rgba(17, 17, 27, 1.0);
+  #
+  #     @define-color rosewater_hover rgba(245, 224, 220, 0.40);
+  #     @define-color flamingo_hover rgba(242, 205, 205, 0.40);
+  #     @define-color pink_hover rgba(245, 194, 231, 0.40);
+  #     @define-color mauve_hover rgba(149, 127, 184, 0.40);
+  #     @define-color red_hover rgba(232, 36, 36, 0.40);
+  #     @define-color maroon_hover rgba(210, 126, 153, 0.40);
+  #     @define-color peach_hover rgba(255, 160, 102, 0.40);
+  #     @define-color yellow_hover rgba(230, 195, 132, 0.40);
+  #     @define-color green_hover rgba(152, 187, 108, 0.40);
+  #     @define-color teal_hover rgba(148, 226, 213, 0.40);
+  #     @define-color sky_hover rgba(126, 156, 216, 0.40);
+  #     @define-color sapphire_hover rgba(127, 180, 202, 0.40);
+  #     @define-color blue_hover rgba(156, 171, 202, 0.40);
+  #     @define-color blue_wave_hover rgba(45, 79, 103, 0.40);
+  #     @define-color lavender_hover rgba(147, 138, 169, 0.40);
+  #     @define-color text_hover rgba(220, 215, 186, 0.40);
+  #     @define-color subtext1_hover rgba(186, 194, 222, 0.40);
+  #     @define-color subtext0_hover rgba(166, 173, 200, 0.40);
+  #     @define-color overlay2_hover rgba(147, 153, 178, 0.40);
+  #     @define-color overlay1_hover rgba(127, 132, 156, 0.40);
+  #     @define-color overlay0_hover rgba(108, 112, 134, 0.40);
+  #     @define-color surface2_hover rgba(88, 91, 112, 0.40);
+  #     @define-color surface1_hover rgba(69, 71, 90, 0.40);
+  #     @define-color surface0_hover rgba(42, 42, 55, 0.40);
+  #     @define-color base_hover rgba(30, 30, 46, 0.40);
+  #     @define-color mantle_hover rgba(24, 24, 37, 0.40);
+  #     @define-color crust_hover rgba(17, 17, 27, 0.40);
+  #
+  #
+  #     * {
+  #       font-family: "FiraCode Nerd Font";
+  #       font-size: 15px;
+  #       margin: 0;
+  #       min-height: 0;
+  #     }
+  #
+  #     #waybar {
+  #       background: transparent;
+  #       color: @text;
+  #     }
+  #
+  #     #workspaces {
+  #       border-radius: 1rem;
+  #       background-color: @surface0;
+  #       margin-left: 1rem;
+  #     }
+  #
+  #     #workspaces button {
+  #       color: @lavender;
+  #       border-radius: 1rem;
+  #     }
+  #
+  #     #workspaces button.active {
+  #       color: @sky;
+  #       border-radius: 1rem;
+  #     }
+  #
+  #     #workspaces button:hover {
+  #       color: @sapphire;
+  #       border-radius: 1rem;
+  #     }
+  #
+  #     #custom-music,
+  #     #tray,
+  #     #backlight,
+  #     #clock,
+  #     #battery,
+  #     #pulseaudio,
+  #     #custom-lock,
+  #     #language,
+  #     #bluetooth,
+  #     #custom-power,
+  #     #custom-notification {
+  #       background-color: @surface0;
+  #       padding: 0.5rem 0.8rem;
+  #       margin: 0px 0px;
+  #     }
+  #
+  #     #clock:hover {
+  #       background-color: @blue_hover;
+  #       border-radius: 0px 1rem 1rem 0px;
+  #       margin-right: 1rem;
+  #     }
+  #
+  #     #clock {
+  #       transition: all 0.1s linear;
+  #       color: @blue;
+  #       border-radius: 0px 1rem 1rem 0px;
+  #       margin-right: 1rem;
+  #     }
+  #
+  #     #custom-lock:hover {
+  #       padding-right: 1.5rem;
+  #       padding-left: 1.5rem;
+  #       background-color: @green_hover;
+  #     }
+  #
+  #     #custom-lock {
+  #       padding-right: 1.5rem;
+  #       padding-left: 1.5rem;
+  #       transition: all 0.1s linear;
+  #       color: @green;
+  #     }
+  #
+  #     #battery {
+  #       color: @green;
+  #     }
+  #
+  #     #battery.charging {
+  #       color: @green;
+  #     }
+  #
+  #     #battery.warning:not(.charging) {
+  #       color: @red;
+  #     }
+  #
+  #     #bluetooth {
+  #       transition: all 0.1s linear;
+  #       color: @blue_wave;
+  #     }
+  #
+  #     #bluetooth:hover {
+  #       background-color: @blue_wave_hover;
+  #     }
+  #
+  #     #pulseaudio:hover {
+  #       background-color: @maroon_hover;
+  #       border-radius: 1rem 0px 0px 1rem;
+  #       margin-left: 0px;
+  #     }
+  #
+  #     #pulseaudio {
+  #       transition: all 0.1s linear;
+  #       color: @maroon;
+  #       border-radius: 1rem 0px 0px 1rem;
+  #       margin-left: 0px;
+  #     }
+  #
+  #     #custom-music {
+  #       color: @mauve;
+  #       border-radius: 1rem;
+  #     }
+  #
+  #     #language:hover {
+  #       background-color: @peach_hover;
+  #     }
+  #
+  #     #language {
+  #       transition: all 0.1s linear;
+  #       border-radius: 1rem 0px 0px 1rem;
+  #       color: @peach;
+  #     }
+  #
+  #     #custom-notification:hover {
+  #       background-color: rgba(45, 79, 103, 0.40);
+  #       margin-right: 1rem;
+  #       border-radius: 1rem;
+  #     }
+  #
+  #     #custom-notification {
+  #       transition: all 0.1s linear;
+  #       color: rgba(45, 79, 103, 1.0) ;
+  #       margin-right: 1rem;
+  #       border-radius: 1rem;
+  #     }
+  #
+  #     #custom-notification {
+  #       color: #2d4f67;
+  #       margin-right: 1rem;
+  #       border-radius: 1rem;
+  #     }
+  #
+  #     #custom-power:hover {
+  #       background-color: @red_hover;
+  #       margin-right: 1rem;
+  #       border-radius: 0px 1rem 1rem 0px;
+  #       padding-right: 1.5rem;
+  #       padding-left: 1.5rem;
+  #     }
+  #
+  #     #custom-power {
+  #       transition: all 0.1s linear;
+  #       color: @red;
+  #       margin-right: 1rem;
+  #       border-radius: 0px 1rem 1rem 0px;
+  #       padding-right: 1.5rem;
+  #       padding-left: 1.5rem;
+  #     }
+  #
+  #     #tray {
+  #       margin-right: 2rem;
+  #       border-radius: 1rem;
+  #     }
+  #
+  #     #workspaces button.urgent {
+  #       color: @red;
+  #     }
+  #   '';
+  # };
 
   programs.eza = {
     enable = true;
