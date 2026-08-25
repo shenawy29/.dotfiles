@@ -220,26 +220,37 @@ in
 
       settings = {
         bar = {
+          location = "bottom";
+          scale = 0.8;
+
+          button-icon-size = 0.85;
+          button-icon-padding = 0.7;
+          button-label-size = 0.9;
+          button-label-padding = 0.7;
+          button-gap = 0.7;
+          module-gap = 0.35; # was implicitly 0.5, gap between modules on the bar
+          padding = 0.25; # internal top/bottom padding of the bar itself
+
           layout = [
             {
               monitor = "*";
               left = [
                 "dashboard"
+                "keyboard-input"
+                "netstat"
+                "media"
+                "cava"
                 "hyprland-workspaces"
               ];
               center = [ "clock" ];
               right = [
+                "notifications"
                 "cpu"
                 "ram"
-                "keyboard-input"
-                "idle-inhibit"
-                "brightness"
                 "microphone"
                 "volume"
-                "network"
+                "weather"
                 "bluetooth"
-                "battery"
-                "notifications"
                 "systray"
                 "power"
               ];
@@ -249,25 +260,59 @@ in
 
         osd = {
           enabled = true;
-          position = "bottom"; # top-left|top|top-right|right|bottom-right|bottom|bottom-left|left
+          position = "bottom";
           duration = 2500;
-          monitor = "primary"; # or a connector name e.g. "eDP-1"
+          monitor = "primary";
           margin = 150;
           border = true;
-          layer = "overlay"; # background|bottom|top|overlay
+          layer = "overlay";
         };
 
         modules = {
+          media = {
+            icon-type = "application-mapped";
+            format = "{{ title }} - {{ artist }}";
+            label-max-length = 20;
+            border-show = false;
+            icon-color = "auto";
+            icon-bg-color = "blue";
+            label-color = "blue";
+            button-bg-color = "bg-surface-elevated";
+            left-click = "dropdown:media";
+
+            player-icons = {
+              "*spotify*" = "si-spotify-symbolic";
+            };
+
+            player-priority = [
+              "*spotify*"
+              "*google-chrome*"
+            ];
+          };
+
+          weather = {
+            provider = "open-meteo";
+            location = "Port Said,EG";
+            units = "metric";
+            format = "{{ temp }}{{ temp_unit }}";
+            icon-name = "ld-sun-symbolic";
+            border-show = false;
+            icon-color = "auto";
+            icon-bg-color = "accent";
+            label-color = "accent";
+            button-bg-color = "bg-surface-elevated";
+            left-click = "dropdown:weather";
+          };
 
           hyprland-workspaces = {
             min-workspace-count = 5;
             monitor-specific = true;
             show-special = true;
             urgent-show = true;
-            urgent-mode = "workspace"; # workspace|application
-            display-mode = "label"; # label|icon|none
+            urgent-mode = "workspace";
+            display-mode = "icon";
             label-use-name = false;
-            numbering = "absolute"; # absolute|relative
+            numbering = "absolute";
             divider = " ";
             app-icons-show = false;
             app-icons-dedupe = true;
@@ -278,7 +323,7 @@ in
             icon-size = 1.0;
             label-size = 1.0;
             workspace-ignore = [ ];
-            active-indicator = "background"; # background|underline
+            active-indicator = "background";
             active-color = "accent";
             occupied-color = "fg-muted";
             empty-color = "fg-subtle";
